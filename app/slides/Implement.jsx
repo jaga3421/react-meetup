@@ -13,74 +13,57 @@ const data = {
   title: "Practical Tips for Accessible React Components ",
   horizandalSubSlides: [
     {
-      title: "Importance of Semantic HTML",
+      title: "Semantic HTML",
       list: [
         {
-          title: "Definition:",
+          title: "Inherent Support:",
           content:
-            "Accessibility refers to the design and creation of websites and web applications that are usable by people of all abilities and disabilities.",
+            "Semantic HTML elements like <button>, <input>, <nav>, and <article> provide inherent accessibility features, such as keyboard accessibility and screen reader support",
         },
         {
-          title: "Inclusive Approach:",
+          title: "Custom Components:",
           content:
-            "Accessibility ensures that the web is inclusive for everyone, including elderly users, users in rural areas, and those with temporary disabilities (like a broken arm).",
-        },
-        {
-          title: "Ethical Responsibility:",
-          content:
-            "Accessibility is seen as an ethical obligation in the digital space, ensuring equal access to information and digital services.",
+            "When creating custom components, map them appropriately to the corresponding semantic HTML elements. Ex: Using a combination of <input>, <ul>, <li> to create a drop down instead of just <div> and <span>.",
         },
       ],
     },
     {
-      title: "Managing Focus for Keyboard and Screen Reader",
+      title: "Managing Focus",
       list: [
         {
-          title: "WCAG Compliance:",
+          title: "General Focus Management:",
           content:
-            "Accessibility implementation requires following the Web Content Accessibility Guidelines (WCAG). These guidelines, set standards for accessibility at various levels (A, AA, AAA).",
+            "Ensure interactive elements like links and form controls are either autofocussed/focusable and that the focus order follows a logical sequence. Ex: Ability to TAB through inputs in the order they appear.",
         },
         {
-          title: "Assistive Technologies:",
+          title: "Custom Focus Handling with ref:",
           content:
-            "Designing for accessibility includes ensuring compatibility with assistive technologies like screen readers and Braille terminals.",
+            "Utilize React's ref system to manage focus, especially in complex components like modals and dropdowns. Ex: When a modal opens, shift focus to the modal and trap focus within it until closed.",
         },
         {
-          title: "Regular Testing & Feedback:",
+          title: "State-Based Focus Handling:",
           content:
-            "Maintaining accessibility standards involves regular testing with automated tools and human evaluators, especially those with disabilities.",
+            "Use state and keyboard events for focus management in components like menus. Ex: Track focused menu item in state; on close, focus returns to the opener.",
         },
       ],
     },
     {
       title: "Aria Attributes and Roles",
-
       list: [
         {
-          title: "The Right Thing to Do:",
+          title: "Enhancing Form Accessibility:",
           content:
-            "Accessibility is a moral commitment to inclusivity, ensuring everyone, especially those with disabilities, can access digital content. It's crucial for ethical web development.",
+            "Utilize ARIA attributes to improve screen reader interaction with forms. Ex: Add 'aria-labelledby' to associate form labels with their controls.",
         },
         {
-          title: "It is the Law:",
+          title: "Defining Element Roles:",
           content:
-            "Web accessibility is a legal requirement in many areas, like under the ADA in the U.S. Compliance prevents discrimination against people with disabilities and avoids legal issues.",
-        },
-      ],
-    },
-    {
-      title: "Responsive and Adaptive Design",
-
-      list: [
-        {
-          title: "The Right Thing to Do:",
-          content:
-            "Accessibility is a moral commitment to inclusivity, ensuring everyone, especially those with disabilities, can access digital content. It's crucial for ethical web development.",
+            "Use ARIA roles to clarify the purpose of elements to assistive technologies. Ex: Assign 'role=button' to a div that acts as a button.",
         },
         {
-          title: "It is the Law:",
+          title: "Dynamic Content Updates:",
           content:
-            "Web accessibility is a legal requirement in many areas, like under the ADA in the U.S. Compliance prevents discrimination against people with disabilities and avoids legal issues.",
+            "Implement dynamic ARIA attributes for announcing real-time content changes. Ex: Use 'aria-live' for real-time updates in a chat application.",
         },
       ],
     },
@@ -114,17 +97,19 @@ function Implement() {
               className="w-[95%] flex-shrink-0  snap-center font-light text-left flex flex-row"
             >
               <div className="cardPrimary">
-                <h3 className="text-4xl mb-16">{slide.title}</h3>
+                <h3 className="text-4xl mb-8 text-center font-bold">
+                  {slide.title}
+                </h3>
 
                 {slide.list?.map((content, index) => (
                   <li
                     key={index}
                     className="flex items-start mb-8 space-x-4 text-3xl "
                   >
-                    <p className="font-thin">
-                      <span className="font-bold">{content.title}</span>{" "}
+                    <div className="font-thin">
+                      <p className="font-semibold mb-4">{content.title}</p>
                       {content.content}
-                    </p>
+                    </div>
                   </li>
                 ))}
               </div>

@@ -3,6 +3,8 @@ import Agenda from "./slides/Agenda";
 import Why from "./slides/Why";
 import Principles from "./slides/Principles";
 import Implement from "./slides/Implement";
+import Libraries from "./slides/Libraries";
+import Thanks from "./slides/Thanks";
 
 export default function Home() {
   return (
@@ -12,6 +14,8 @@ export default function Home() {
       <Why />
       <Principles />
       <Implement />
+      <Libraries />
+      <Thanks />
     </main>
   );
 }
