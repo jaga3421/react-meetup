@@ -8,6 +8,7 @@ import { useInView } from "react-intersection-observer";
 import { FaLinkedin } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
 import { FaLink } from "react-icons/fa";
+import { IoMailSharp } from "react-icons/io5";
 
 import {
   VariantStaggerParent,
@@ -31,6 +32,11 @@ const data = {
       icon: <FaLink />,
       content: "ja.gadee.sh",
       url: "https://ja.gadee.sh",
+    },
+    {
+      icon: <IoMailSharp />,
+      content: "j@gadee.sh",
+      url: "mailto:j@gadee.sh",
     },
   ],
 };

@@ -1,5 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { FaPlayCircle } from "react-icons/fa";
+import { FaCirclePause } from "react-icons/fa6";
 
 const TimerComponent = ({ timer }) => {
   const totalTime = timer * 60; // Convert minutes to seconds
@@ -50,7 +52,12 @@ const TimerComponent = ({ timer }) => {
       }`}
       onClick={toggleTimer}
     >
-      <span className="text-left inline-block w-[100px]">{formatTime()}</span>
+      <span className="text-left flex flex-row space-x-2 items-center justify-center w-[100px] opacity-55">
+        <span className="my-2 inline-block">
+          {isActive ? <FaCirclePause /> : <FaPlayCircle />}
+        </span>
+        {"  "} {formatTime()}
+      </span>
     </div>
   );
 };
