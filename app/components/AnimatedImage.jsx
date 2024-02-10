@@ -53,7 +53,7 @@ const AnimatedImage = () => {
           animate={visibleImage[key] ? "visible" : "hidden"}
           variants={variants}
           transition={{ duration: 0.5 }}
-          style={{ position: "absolute", right: 0, bottom: 0 }}
+          style={{ position: "absolute", right: 0, top: 0 }}
         >
           <img src={path} alt={alt} style={{ width: width, height: "auto" }} />
           {caption && (
