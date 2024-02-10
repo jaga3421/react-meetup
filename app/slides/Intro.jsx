@@ -48,7 +48,7 @@ function Intro() {
               1000,
               "J JAY",
               2000,
-              "React Bangalore",
+              "ReactJS Bangalore",
               4000,
             ]}
             wrapper="span"
