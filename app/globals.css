@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Alegreya:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Alegreya:wght@400;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 body {
   color: rgb(var(--foreground-rgb));
@@ -14,14 +13,28 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+@keyframes rotate360Bezier {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    /* 2s out of 20s to complete the rotation */
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
+.rotate-animation-bezier {
+  animation: rotate360Bezier 20s cubic-bezier(0.32, 0.04, 0.3, 1) infinite;
+}
 
-
-
-h1, h2 {
-  font-family: 'Alegreya', serif;
+h1,
+h2 {
+  font-family: "Alegreya", serif;
 }
 
 .cardPrimary {
-  @apply font-light text-left p-8  rounded-lg border border-gray-700 bg-[rgba(50,50,50)] hover:bg-[rgba(60,60,60)] transition
+  @apply font-light text-left p-8  rounded-lg border border-gray-700 bg-[rgba(50,50,50)] hover:bg-[rgba(60,60,60)] transition;
 }

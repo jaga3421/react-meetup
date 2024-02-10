@@ -7,6 +7,7 @@ import Libraries from "./slides/Libraries";
 import Thanks from "./slides/Thanks";
 import AnimatedImage from "./components/AnimatedImage";
 import TimerComponent from "./components/TimerComponent";
+import RBLogo from "./components/RBLogo";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <Thanks />
       <AnimatedImage />
       <TimerComponent timer={15} />
+      <RBLogo />
     </main>
   );
 }
