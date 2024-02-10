@@ -13,25 +13,21 @@ const data = {
   title: "React Accessibility Libraries",
   horizandalSubSlides: [
     {
-      title: "React-axe",
+      title: "react-axe",
       content:
         "Automatically detects accessibility issues in React applications during development in real-time.",
       example: "Missing alt text, inadequate contrast ratios",
     },
     {
-      title: "Eslint-plugin-jsx-a11y",
+      title: "eslint-plugin-jsx-a11y",
       content: "Enforces accessibility best practices in JSX code.",
       example: "Focusable interactive elements, appropriate event handlers",
     },
     {
-      title: "React A11y",
-      content: "Provides warnings for components that are not accessible.",
+      title: "react-A11y",
+      content:
+        "Provides warnings for components that are not accessible. Deprecated in favour of @axe-core/react.",
       example: "Missing keyboard event handlers, custom button issues",
-    },
-    {
-      title: "A11y-kit",
-      content: "A collection of hooks and utilities to improve accessibility.",
-      example: "Focus management, screen reader announcements",
     },
   ],
 };
@@ -60,7 +56,7 @@ function Libraries() {
             <motion.div
               variants={VariantStaggerChildShow}
               key={index}
-              className="cardPrimary w-1/4"
+              className="cardPrimary w-1/3"
             >
               <h3 className="text-3xl font-semibold mb-8">{slide.title}</h3>
               <p className="flex items-start mb-8 space-x-4 text-2xl ">
