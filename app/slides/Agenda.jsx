@@ -13,10 +13,13 @@ import MotionH1 from "../components/MotionH1";
 const data = {
   title: "What's on the Agenda?",
   subtitles: [
-    "Understanding Accessibility in Web Development",
-    "Key Accessibility Principles for React Apps",
-    "Practical Tips for Accessible React Components",
-    "Exploring Essential React Accessibility Libraries",
+    "Discussing Agenda",
+    "What are Chrome Extensions",
+    "Chrome Extension types",
+    "Why React for Chrome Extensions",
+    "A Quick case study",
+    "How to actually build one",
+    "Libraries to help",
     "Q A",
   ],
 };

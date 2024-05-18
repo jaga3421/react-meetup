@@ -10,7 +10,7 @@ import { useInView } from "react-intersection-observer";
 import MotionH1 from "../components/MotionH1";
 
 const data = {
-  title: "Building Accessible React Apps",
+  title: "Building powerful Chrome extensions with React",
   author: "Jagadeesh Jayachandran | React Bangalore",
   social: [
     {

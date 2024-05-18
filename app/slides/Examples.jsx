@@ -8,37 +8,40 @@ import {
   VariantStaggerParent,
   VariantStaggerChildShow,
 } from "../framerVariants";
+import Image from "next/image";
 
 const data = {
-  title: "Key Principles of Accessibility - P.O.U.R",
+  title: "For Example",
   horizandalSubSlides: [
     {
-      title: "Perceivable",
-      content:
-        "Information must be presentable in ways that all users can perceive.",
-      example:
-        "Alt text for images for screen readers, Close Captions, Adjustable Text, Contrats",
+      "title": "Adblock Plus",
+      "content": "Blocks ads on web pages, providing a cleaner and faster browsing experience.",
+      "example": "webRequest API, storage API",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/e/eb/Adblock_logo.png"
     },
     {
-      title: "Operable",
-      content: "UI components and navigation must be operable by all users.",
-      example: "Keyboard navigation, Skip to main content, Focus order",
+      "title": "LastPass",
+      "content": "Manages and auto-fills passwords for websites, enhancing security and convenience.",
+      "example": "storage API, identity API",
+      "image": "https://cdn.icon-icons.com/icons2/2407/PNG/512/lastpass_icon_146153.png"
     },
     {
-      title: "Comprehensible",
-      content: " Information and UI operation must be understandable. ",
-      example: "Consistent navigation, Error handling, Clear instructions",
+      "title": "Google Translate",
+      "content": "Translates selected text on web pages to different languages.",
+      "example": "Uses context menu for translation options, communicates with translation API. Type: Context Menu, API: contextMenus API, storage API",
+      "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Google_Translate_logo.svg/480px-Google_Translate_logo.svg.png"
     },
     {
-      title: "Robust",
-      content:
-        "Content must be robust enough to be interpreted reliably by a wide variety of user agents.",
-      example: "Semantic HTML, ARIA roles, Valid HTML",
-    },
-  ],
+      "title": "Grammarly",
+      "content": "Provides grammar and spell-checking across various online platforms like email, social media, and documents.",
+      "example": "storage API, contextMenus API",
+      "image": "https://qph.cf2.quoracdn.net/main-qimg-1e030e9215902cd25a5d6389b4871125"
+    }
+  ]
+  
 };
 
-function Principles() {
+function Examples() {
   const { ref, inView } = useInView({
     triggerOnce: false,
     threshold: 0.1,
@@ -65,6 +68,7 @@ function Principles() {
               className="cardPrimary w-1/4"
             >
               <h3 className="text-3xl font-semibold mb-8">{slide.title}</h3>
+              <Image src={slide.image} width={100} height={100} className="mb-4"/>
               <p className="flex items-start mb-8 space-x-4 text-2xl ">
                 {slide.content}
               </p>
@@ -84,4 +88,4 @@ function Principles() {
   );
 }
 
-export default Principles;
+export default Examples;

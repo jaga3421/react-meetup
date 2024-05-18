@@ -53,7 +53,7 @@ const TimerComponent = ({ timer }) => {
       onClick={toggleTimer}
     >
       <span className="text-left flex flex-row space-x-2 items-center justify-center w-[100px] opacity-55">
-        <span className="my-2 inline-block">
+        <span className="my-2 inline-block px-2">
           {isActive ? <FaCirclePause /> : <FaPlayCircle />}
         </span>
         {"  "} {formatTime()}

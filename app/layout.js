@@ -4,8 +4,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Building Accesible React Apps",
-  description: "A talk on building accessible React apps",
+  title: "Building Powerful Chrome Extensions with React ",
+  description: "A talk on building Chrome Extensio with  React code",
 };
 
 export default function RootLayout({ children }) {
