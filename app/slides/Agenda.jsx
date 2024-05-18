@@ -15,7 +15,6 @@ const data = {
   subtitles: [
     "Discussing Agenda",
     "What are Chrome Extensions",
-    "Chrome Extension types",
     "Why React for Chrome Extensions",
     "A Quick case study",
     "How to actually build one",

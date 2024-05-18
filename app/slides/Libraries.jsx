@@ -10,25 +10,26 @@ import {
 } from "../framerVariants";
 
 const data = {
-  title: "React Accessibility Libraries",
+  title: "Libraries & Boilerplates",
   horizandalSubSlides: [
     {
-      title: "react-axe",
+      title: "CRXJS",
       content:
-        "Automatically detects accessibility issues in React applications during development in real-time.",
-      example: "Missing alt text, inadequate contrast ratios",
+        "CRXJS Vite Plugin is a tool that helps you make Chrome Extensions using modern web development technology.",
+      link:
+        "https://crxjs.dev/vite-plugin",
     },
     {
-      title: "eslint-plugin-jsx-a11y",
-      content: "Enforces accessibility best practices in JSX code.",
-      example: "Focusable interactive elements, appropriate event handlers",
+      title: "vite-web-extension",
+      content: "Chrome Extension Boilerplate with React + Vite + TypeScript + TailwindCSS",
+      link: "https://github.com/JohnBra/vite-web-extension",
     },
     {
-      title: "react-A11y",
-      content:
-        "Provides warnings for components that are not accessible. Deprecated in favour of @axe-core/react.",
-      example: "Missing keyboard event handlers, custom button issues",
+      title: "chrome-extension-boilerplate-react",
+      content: "1K Forks | 3.2K Stars ",
+      link: "https://github.com/lxieyang/chrome-extension-boilerplate-react",
     },
+   
   ],
 };
 
@@ -40,7 +41,7 @@ function Libraries() {
 
   return (
     <div ref={ref}>
-      <SlideWrapper className="text-center md:items-start" id="libraries">
+      <SlideWrapper className="text-center md:items-start" id="principles">
         <MotionH1 className="text-center" inView={inView}>
           {data.title}
         </MotionH1>
@@ -62,14 +63,14 @@ function Libraries() {
               <p className="flex items-start mb-8 space-x-4 text-2xl ">
                 {slide.content}
               </p>
-              {slide.example?.split(",").map((item, index) => (
-                <p key={index} className="text-sm py-2 px-1 inline-block">
-                  <span className=" p-1 color-white rounded bg-pink-600">
+              <a href={slide.link} target="_blank" rel="noreferrer">
+                <p className="text-sm py-2 px-1 inline-block">
+                  <span className=" p-1 color-white rounded text-pink-600">
                     {" "}
-                    {item}
+                    {slide.link}
                   </span>
                 </p>
-              ))}
+                </a>
             </motion.div>
           ))}
         </motion.div>
