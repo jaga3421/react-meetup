@@ -14,6 +14,7 @@ import {
   VariantStaggerParent,
   VariantStaggerChildShow,
 } from "../framerVariants";
+import Image from "next/image";
 
 const data = {
   title: "Thanks & QA ?",
@@ -56,6 +57,15 @@ function Thanks() {
 
         {/* Horizandal slides */}
         <motion.div
+          className="flex space-x-4  mx-auto items-center justify-center my-4 bg-slate-100 p-4"
+          variants={VariantStaggerParent}
+          initial="hidden"
+          animate={inView ? "show" : "hidden"}
+
+        >
+          <Image src="/images/jaga3421.png" width={300} height={300} />
+        </motion.div>
+        <motion.div
           className="flex space-x-4 w-full mx-auto"
           variants={VariantStaggerParent}
           initial="hidden"
@@ -78,6 +88,7 @@ function Thanks() {
             ))}
           </motion.div>
         </motion.div>
+     
       </SlideWrapper>
     </div>
   );

@@ -10,7 +10,7 @@ import {
 } from "../framerVariants";
 
 const data = {
-  title: "What is a Chrome Extension?",
+  title: "Chrome Extension.. What?",
   horizandalSubSlides:[
     {
       "title": "What are Chrome Extensions?",
@@ -30,7 +30,7 @@ const data = {
       ]
     },
     {
-      "title": "Types of Chrome Extensions",
+      "title": "Types of Chrome Extensions Actions",
       "list": [
         {
           "title": "Browser Actions:",
@@ -38,7 +38,7 @@ const data = {
         },
         {
           "title": "Page Actions:",
-          "content": "Interact with specific web pages, showing icons in the address bar when applicable."
+          "content": "Interact with specific web pages. Show UI elements. Manipulate DOM."
         },
         {
           "title": "Background Scripts:",
@@ -46,23 +46,7 @@ const data = {
         }
       ]
     },
-    {
-      "title": "Usage of Chrome Extensions",
-      "list": [
-        {
-          "title": "Enhanced Browsing:",
-          "content": "Improve user experience with features like ad blocking, password management, and custom themes."
-        },
-        {
-          "title": "Automation:",
-          "content": "Automate repetitive tasks such as form filling, website monitoring, and data extraction."
-        },
-        {
-          "title": "Integration:",
-          "content": "Connect with third-party services for notifications, data syncing, and enhanced functionalities."
-        }
-      ]
-    },
+   
     {
       "title": "Architecture of Chrome Extensions",
       "list": [
@@ -81,6 +65,27 @@ const data = {
         {
           "title": "UI Elements:",
           "content": "Components like popups, options pages, and browser action icons for user interaction."
+        }
+      ]
+    },
+    {
+      "title": "Important APIs",
+      "list":[
+        {
+          "title": "webRequest API:",
+          "content": "Allows extensions to observe and analyze traffic and to intercept, block, or modify requests in-flight."
+        },
+        {
+          "title": "storage API:",
+          "content": "Provides a simple interface for storing, retrieving, and tracking changes to user data."
+        },
+        {
+          "title": "tabs API:",
+          "content": "Provides methods to interact with the browser's tab system, allowing the extension to create, modify, and rearrange tabs."
+        },
+        {
+          "title": "contextMenus API:",
+          "content": "Enables extensions to add items to the context menu in the browser."
         }
       ]
     }

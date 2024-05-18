@@ -3,21 +3,14 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const data = [
-  { key: "D", path: "/images/dwight.gif", alt: "Dwight", width: "700px" },
+  { key: "D", path: "/images/don.gif", alt: "don", width: "700px" },
   {
-    key: "S",
-    path: "/images/shakthimaan.gif",
-    alt: "Shakthimaan",
+    key: "T",
+    path: "/images/tony.gif",
+    alt: "tony",
     width: "800px",
-    caption: "Showing off is Wrong",
   },
-  {
-    key: "X",
-    path: "/images/drax.webp",
-    alt: "Drax",
-    width: "600px",
-    caption: "I will do YOU one better, Why is accessibility",
-  },
+
 ];
 
 const AnimatedImage = () => {
@@ -54,6 +47,7 @@ const AnimatedImage = () => {
           variants={variants}
           transition={{ duration: 0.5 }}
           style={{ position: "absolute", right: 0, top: 0 }}
+          className="flex items-center justify-center w-full h-screen bg-black bg-opacity-80 z-[9999]"
         >
           <img src={path} alt={alt} style={{ width: width, height: "auto" }} />
           {caption && (
