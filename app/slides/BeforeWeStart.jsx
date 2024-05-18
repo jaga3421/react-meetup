@@ -10,7 +10,7 @@ import {
 } from "../framerVariants";
 
 const data = {
-  title: "Accessibility in Web Development",
+  title: "Before We Start",
   horizandalSubSlides: [
     {
       title: "What is Accessibility?",
@@ -32,46 +32,11 @@ const data = {
         },
       ],
     },
-    {
-      title: "How is Accessibility?",
-      list: [
-        {
-          title: "WCAG Compliance:",
-          content:
-            "Accessibility implementation requires following the Web Content Accessibility Guidelines (WCAG). These guidelines, set standards for accessibility at various levels (A, AA, AAA).",
-        },
-        {
-          title: "Assistive Technologies:",
-          content:
-            "Designing for accessibility includes ensuring compatibility with assistive technologies like screen readers and Braille terminals.",
-        },
-        {
-          title: "Regular Testing & Feedback:",
-          content:
-            "Maintaining accessibility standards involves regular testing with automated tools and human evaluators, especially those with disabilities.",
-        },
-      ],
-    },
-    {
-      title: "Why is Accessibility?",
-
-      list: [
-        {
-          title: "The Right Thing to Do:",
-          content:
-            "Accessibility is a moral commitment to inclusivity, ensuring everyone, especially those with disabilities, can access digital content. It's crucial for ethical web development.",
-        },
-        {
-          title: "It is the Law:",
-          content:
-            "Web accessibility is a legal requirement in many areas, like under the ADA in the U.S. Compliance prevents discrimination against people with disabilities and avoids legal issues.",
-        },
-      ],
-    },
+   
   ],
 };
 
-function Why() {
+function BeforeWeStart() {
   const { ref, inView } = useInView({
     triggerOnce: false,
     threshold: 0.1,
@@ -120,4 +85,4 @@ function Why() {
   );
 }
 
-export default Why;
+export default BeforeWeStart;
