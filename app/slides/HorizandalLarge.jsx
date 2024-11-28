@@ -9,34 +9,8 @@ import {
   VariantStaggerChildRight,
 } from "../framerVariants";
 
-const data = {
-  title: "Before We Start",
-  horizandalSubSlides: [
-    {
-      title: "What is Accessibility?",
-      list: [
-        {
-          title: "Definition:",
-          content:
-            "Accessibility refers to the design and creation of websites and web applications that are usable by people of all abilities and disabilities.",
-        },
-        {
-          title: "Inclusive Approach:",
-          content:
-            "Accessibility ensures that the web is inclusive for everyone, including elderly users, users in rural areas, and those with temporary disabilities (like a broken arm).",
-        },
-        {
-          title: "Ethical Responsibility:",
-          content:
-            "Accessibility is seen as an ethical obligation in the digital space, ensuring equal access to information and digital services.",
-        },
-      ],
-    },
-   
-  ],
-};
 
-function BeforeWeStart() {
+function HorizandalSubSlides({ data }) {
   const { ref, inView } = useInView({
     triggerOnce: false,
     threshold: 0.1,
@@ -56,7 +30,7 @@ function BeforeWeStart() {
           initial="hidden"
           animate={inView ? "show" : "hidden"}
         >
-          {data.horizandalSubSlides.map((slide, index) => (
+          {data.horizandalSubSlides?.map((slide, index) => (
             <motion.div
               variants={VariantStaggerChildRight}
               key={index}
@@ -85,4 +59,4 @@ function BeforeWeStart() {
   );
 }
 
-export default BeforeWeStart;
+export default HorizandalSubSlides;

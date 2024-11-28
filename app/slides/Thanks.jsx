@@ -16,33 +16,14 @@ import {
 } from "../framerVariants";
 import Image from "next/image";
 
-const data = {
-  title: "Thanks & QA ?",
-  social: [
-    {
-      icon: <FaLinkedin />,
-      content: "/in/jjayy",
-      url: "https://www.linkedin.com/in/jjayy",
-    },
-    {
-      icon: <FaGithub />,
-      content: "/jaga3421",
-      url: "https://www.github.com/jaga3421",
-    },
-    {
-      icon: <FaLink />,
-      content: "ja.gadee.sh",
-      url: "https://ja.gadee.sh",
-    },
-    {
-      icon: <IoMailSharp />,
-      content: "j@gadee.sh",
-      url: "mailto:j@gadee.sh",
-    },
-  ],
+const iconMap = {
+    FaLinkedin: FaLinkedin,
+    FaGithub: FaGithub,
+    FaLink: FaLink,
+    IoMailSharp: IoMailSharp,
 };
 
-function Thanks() {
+function Thanks({ data }) {
   const { ref, inView } = useInView({
     triggerOnce: false,
     threshold: 0.1,
@@ -82,7 +63,7 @@ function Thanks() {
                 target="_blank"
                 className="flex flex-row items-center p-1 space-x-2 text-center"
               >
-                {item.icon}
+                {React.createElement(iconMap[item.icon])}
                 <span>{item.content}</span>
               </a>
             ))}

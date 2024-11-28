@@ -10,20 +10,7 @@ import {
 } from "../framerVariants";
 import MotionH1 from "../components/MotionH1";
 
-const data = {
-  title: "What's on the Agenda?",
-  subtitles: [
-    "Discussing Agenda",
-    "What are Chrome Extensions",
-    "Why React for Chrome Extensions",
-    "A Quick case study",
-    "How to actually build one",
-    "Libraries to help",
-    "Q A",
-  ],
-};
-
-function Agenda() {
+function SingleList({ data }) {
   const { ref, inView } = useInView({
     triggerOnce: false,
     threshold: 0.1,
@@ -31,7 +18,7 @@ function Agenda() {
 
   return (
     <div ref={ref}>
-      <SlideWrapper className="text-center md:items-start" id="agenda">
+      <SlideWrapper className="text-center md:items-start" id={data.id}>
         <MotionH1 className="text-left" inView={inView}>
           {data.title}
         </MotionH1>
@@ -43,7 +30,7 @@ function Agenda() {
             initial="hidden"
             animate={inView ? "show" : "hidden"}
           >
-            {data?.subtitles.map((handle, index) => (
+            {data.subtitles.map((handle, index) => (
               <motion.li
                 key={index}
                 className="flex flex-row items-center space-x-6"
@@ -60,4 +47,4 @@ function Agenda() {
   );
 }
 
-export default Agenda;
+export default SingleList;

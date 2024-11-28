@@ -1,33 +1,31 @@
-import Intro from "./slides/Intro";
-import Agenda from "./slides/Agenda";
-import BeforeWeStart from "./slides/BeforeWeStart";
-import Demo from "./slides/Demo";
-import Thanks from "./slides/Thanks";
-import AnimatedImage from "./components/AnimatedImage";
-import TimerComponent from "./components/TimerComponent";
-import RBLogo from "./components/RBLogo";
-import WhatIsCE from "./slides/WhatIsCE";
-import Examples from "./slides/Examples";
-import WhyReact from "./slides/WhyReact";
-import How2Build from "./slides/How2Build";
-import Libraries from "./slides/Libraries";
+import data from './data'; 
+import Intro from './slides/Intro';
+import SingleList from './slides/SingleList';
+import HorizandalLarge from './slides/HorizandalLarge';
+import Thanks from './slides/Thanks';
+import HorizandalSmall from './slides/HorizandalSmall';
+import TimerComponent from './components/TimerComponent';
 
-export default function Home() {
+export default function Page() {
   return (
     <main className="dvh z-0 h-screen snap-y snap-mandatory overflow-x-hidden overflow-y-scroll bg-[rgb(36,36,36)] text-gray-300">
-      <Intro />
-      <Agenda />
-      {/* <BeforeWeStart /> */}
-      <WhatIsCE />
-      <Examples />
-      <WhyReact />
-      <Demo />
-      <How2Build  />
-      <Libraries />
-      <Thanks />
-      <AnimatedImage />
+      
+      {/* Intro */}
+      <Intro data={data.intro} />
+      <SingleList data={data.agenda} />
+
+      {/* Demo  */}
+      <HorizandalLarge data={data.whatIsTensorFlow} />
+      <HorizandalLarge data={data.whyFaceDetection} />
+      <HorizandalLarge data={data.demo} />
+
+      {/* Examples */}
+      <HorizandalSmall data={data.examples} />
+      
+      <HorizandalLarge data={data.reactAndTensorFlow} />
+      <HorizandalSmall data={data.libraries} />
+      <Thanks data={data.thank} />
       <TimerComponent timer={30} />
-      <RBLogo />
     </main>
   );
 }
