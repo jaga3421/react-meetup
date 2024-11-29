@@ -16,13 +16,13 @@ export default function Page() {
 
       {/* Demo  */}
       <HorizandalLarge data={data.whatIsTensorFlow} />
-      <HorizandalLarge data={data.whyFaceDetection} />
+      <HorizandalSmall data={data.whyFaceDetection} />
       <HorizandalLarge data={data.demo} />
 
-      {/* Examples */}
-      <HorizandalSmall data={data.examples} />
+      {/* React Tensor */}
+      <HorizandalLarge data={data.reactTensor} /> 
       
-      <HorizandalLarge data={data.reactAndTensorFlow} />
+      {/* Ending */}
       <HorizandalSmall data={data.libraries} />
       <Thanks data={data.thank} />
       <TimerComponent timer={30} />
