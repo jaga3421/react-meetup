@@ -20,7 +20,7 @@ function HorizandalSubSlides({ data }) {
     <div ref={ref}>
       <SlideWrapper className="text-center md:items-start" id="why">
         <MotionH1 className="text-center" inView={inView}>
-          {data.title}
+          {data?.title}
         </MotionH1>
 
         {/* Horizandal slides */}
@@ -37,7 +37,7 @@ function HorizandalSubSlides({ data }) {
               className="w-[95%] flex-shrink-0  snap-center font-light text-left flex flex-row"
             >
               <div className="cardPrimary">
-                <h3 className="text-5xl mb-16">{slide.title}</h3>
+                {slide?.title && <h3 className="text-5xl mb-16">{slide?.title}</h3>}
 
                 {slide.list?.map((content, index) => (
                   <li
@@ -47,6 +47,9 @@ function HorizandalSubSlides({ data }) {
                     <p className="font-thin">
                       <span className="font-bold">{content.title}</span>{" "}
                       {content.content}
+                      {content.images && content.images.map((image, index) => (
+                        <img src={image} className="mt-3" alt={content.title} key={index} />
+                      ))}
                     </p>
                   </li>
                 ))}

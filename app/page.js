@@ -21,9 +21,11 @@ export default function Page() {
 
       {/* React Tensor */}
       <HorizandalLarge data={data.reactTensor} /> 
-      
+      <HorizandalLarge data={data.faceApiDeepDive} />
+      <HorizandalLarge data={data.minimumCode} />
+
       {/* Ending */}
-      <HorizandalSmall data={data.libraries} />
+      <HorizandalSmall data={data.considerations} />
       <Thanks data={data.thank} />
       <TimerComponent timer={30} />
     </main>

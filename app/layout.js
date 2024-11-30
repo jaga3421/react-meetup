@@ -4,8 +4,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Building Powerful Chrome Extensions with React ",
-  description: "A talk on building Chrome Extensio with  React code",
+  title: "Facial Detection and Tracking with TensorFlow.js",
+  description: "A talk on facial detection and tracking with TensorFlow.js",
 };
 
 export default function RootLayout({ children }) {

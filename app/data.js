@@ -1,6 +1,6 @@
 export default {
   "intro": {
-    "title": "Face Detection in React with TensorFlow.js",
+    "title": "Face Detection in React with TensorFlow.js (face-api)",
     "author": "Jagadeesh Jayachandran | React Bangalore",
     "social": [
       {
@@ -27,7 +27,7 @@ export default {
         "What is TensorFlow?",
         "Why Face Detection?",
         "A quick demo",
-        "Setting up the project",
+        "Face-api.js Deep Dive",
         "Privacy and Ethical Considerations",
         "Q&A"
       ]
@@ -126,34 +126,195 @@ export default {
 
     "reactTensor": {
       "id": "reactTensor",
-      "title": "Building with React and TensorFlow.js",
-      "horizandalSubSlides": []
+      "title": "Building with React and face-api.js",
+      "horizandalSubSlides": [
+
+        {
+          "title": "What just happened?",
+          "list": 
+          [
+            {
+              "title": "Get Video Stream",
+              "content": "Get access to the webcam and stream the video"
+            },
+            {
+              "title": "Get Face Models",
+              "content": "Download the face detection models from face-api.js. They can be downloaded to your public folder or use the CDN link."
+            },
+            {
+              "title": "Detect Face",
+              "content": "Detect faces in the video stream"
+            },
+            {
+              "title": "Draw on Canvas",
+              "content": "Draw the detections on a canvas element using face-api.js"
+            }
+          ]
+        },
+        {
+          "title": "The face-api.js",
+          "list": 
+          [
+            {
+              "title": "What is it?",
+              "content": "A JavaScript library built on top of TensorFlow.js for face detection and recognition, providing pre-trained models for detecting faces, landmarks, and expressions."
+            },
+            {
+              "title": "Why face-api.js?",
+              "content": "It's easy to use, has pre-trained models, and is well-documented."
+            },
+            {
+              "title": "What can it do?",
+              "content": "Detect faces, landmarks, and expressions."
+            },
+            {
+              "title": "Wait, what about TensorFlow.js?",
+              "content": "Well, face-api.js is built on top of TensorFlow.js, so you can use the same models and APIs."
+            }
+          ]
+        },
+      ]
     },
 
-
-    "libraries": {
-      "id": "libraries",
-      "title": "Useful Libraries",
+    "faceApiDeepDive": {
+      "id": "faceApiDeepDive",
+      "title": "Available APIs",
       "horizandalSubSlides": [
         {
-          "title": "Face-api.js",
-          "content": "A JavaScript library built on top of TensorFlow.js for face detection and recognition, providing pre-trained models for detecting faces, landmarks, and expressions.",
-          "image": "https://example.com/image4.jpg",
-          "link": "https://github.com/justadudewhohacks/face-api.js"
+          "list": 
+          [
+            {
+              "content": "`detections`",
+             "images": [
+              './images/face-detection-input.png',
+              './images/face-detection-output.png'
+             ]
+            }
+          ]
         },
         {
-          "title": "ml5.js",
-          "content": "A high-level library that simplifies the use of machine learning in the browser, including models for face detection.",
-          "image": "https://example.com/image5.jpg",
-          "link": "https://ml5js.org/"
+          "list": 
+          [
+            {
+              "content": "`landmarks`",
+             "images": [
+              './images/face-landmarks-input.png',
+              './images/face-landmarks-output.png'
+             ]
+            }
+          ]
         },
         {
-          "title": "OpenCV.js",
-          "content": "A JavaScript binding for OpenCV, allowing for various image processing tasks, including face detection.",
-          "image": "https://example.com/image6.jpg",
-          "link": "https://docs.opencv.org/3.4/d5/d10/tutorial_js_root.html"
-        }
+          "list": 
+          [
+            {
+              "content": "`expressions`",
+             "images": [
+              './images/face-expressions-input.png',
+              './images/face-expressions-output.png'
+             ]
+            }
+          ]
+        },
+        {
+          "list": 
+          [
+            {
+              "content": "`ageAndGender`",
+             "images": [
+              './images/face-gender-input.png',
+              './images/face-gender-output.png'
+             ]
+            }
+          ]
+        },
+        {
+          "list": 
+          [
+            {
+              "content": "`faceMatcher`",
+             "images": [
+              './images/face-matcher-input.png',
+              './images/face-matcher-output.png'
+             ]
+            }
+          ]
+        },
+
+        // {
+        //   "title": "What do we need?",
+        //   "list": 
+        //   [
+        //     {
+        //       "title": "React JS(Vite/CRA)",
+        //       "content": "We'll use Vite for this project"
+        //     },
+        //     {
+        //       "title": "face-api.js",
+        //       "content": "A JavaScript library built on top of TensorFlow.js for face detection and recognition, providing pre-trained models for detecting faces, landmarks, and expressions."
+        //     },
+        //     {
+        //       "title": "An awesome developer",
+        //       "content": "Thats you!"
+        //     }
+        //   ]
+        // },
+      
+      
       ]
+    },
+
+    "minimumCode": {
+      "id": "minimumCode",
+      "title": "Code Snippet and Flow",
+      "horizandalSubSlides": [
+        {
+          "list": 
+          [
+            {
+              "content": "`setting up face-api.js`",
+             "images": [
+              './images/setup-face.png',
+             ]
+            }
+          ]
+        },
+        {
+          "list": 
+          [
+            {
+              "content": "`setting up video streaming`",
+             "images": [
+              './images/setup-video.png',
+             ]
+            }
+          ]
+        },
+      ]
+    },
+    "considerations": {
+      "id": "considerations",
+      "title": "Considerations",
+      "horizandalSubSlides": 
+        [
+          {
+            "title": "User Consent",
+            "content": "Obtain explicit user permission before accessing webcams or processing facial data, ensuring transparency about its purpose."
+          },
+          {
+            "title": "On-Device Processing",
+            "content": "Process data locally in the browser to enhance privacy and prevent unnecessary transmission of sensitive information."
+          },
+          {
+            "title": "Minimized Data Collection",
+            "content": "Collect only essential data for the application's functionality and avoid storing biometric data unless necessary."
+          },
+          {
+            "title": "Fairness and Bias",
+            "content": "Ensure the face detection models are unbiased and perform consistently across diverse demographics to prevent discrimination."
+          }
+        ]
+      
     },
     "thank": {
       "title": "Thanks & QA ?",
