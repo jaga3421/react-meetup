@@ -132,7 +132,7 @@ const DemoTwo = () => {
 
   return (
     <div className="w-full h-screen bg-gray-200 p-16 relative">
-      <h1 className="text-2xl font-bold text-center">Advanced Face Detection</h1>
+      <h1 className="text-2xl font-bold text-center">Expressions & Landmarks</h1>
       <input
             type="checkbox"
             className="mr-2"

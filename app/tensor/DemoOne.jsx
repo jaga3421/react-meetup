@@ -5,17 +5,28 @@ const FaceDetection = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [ faces, setFaces ] = useState(0);
-  const intervalRef = useRef(null); // Reference to store the interval
+  const [ genderAndAge, setGenderAndAge ] = useState(null);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
-    let isComponentMounted = true; // Flag to track component mount state
+    let isComponentMounted = true;
 
     const loadModels = async () => {
       const MODEL_URL = "https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@master/weights";
-      await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
-      if (isComponentMounted) {
-        console.log("Models loaded from CDN.");
-        startVideo();
+      
+      try {
+        // Load all required models
+        await Promise.all([
+          faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+          faceapi.nets.ageGenderNet.loadFromUri(MODEL_URL),
+        ]);
+        
+        if (isComponentMounted) {
+          console.log("All models loaded from CDN.");
+          startVideo();
+        }
+      } catch (error) {
+        console.error("Error loading models:", error);
       }
     };
 
@@ -26,7 +37,7 @@ const FaceDetection = () => {
           videoRef.current.srcObject = stream;
           console.log("Video stream started.");
           videoRef.current.onloadedmetadata = () => {
-            detectFaces(); // Start detection only after video metadata is loaded
+            detectFaces();
           };
         }
       } catch (error) {
@@ -39,29 +50,54 @@ const FaceDetection = () => {
         const video = videoRef.current;
         const canvas = canvasRef.current;
 
-        // Match canvas size to video dimensions
         const displaySize = { width: video.videoWidth, height: video.videoHeight };
         faceapi.matchDimensions(canvas, displaySize);
 
-        // Store interval reference for cleanup
         intervalRef.current = setInterval(async () => {
-          if (!isComponentMounted) return; // Check if component is still mounted
+          if (!isComponentMounted) return;
 
-          const detections = await faceapi.detectAllFaces(
-            video,
-            new faceapi.TinyFaceDetectorOptions()
-          );
+          try {
+            const detections = await faceapi.detectAllFaces(
+              video,
+              new faceapi.TinyFaceDetectorOptions()
+            )
+            // .withAgeAndGender();
           
-          if (isComponentMounted) {
-            setFaces(detections.length);
-            console.log("Detections:", detections);
+            if (isComponentMounted) {
+              setFaces(detections.length);
+              
+              if (detections.length > 0) {
+                const age = Math.round(detections[0].age);
+                const gender = detections[0].gender;
+                if(age && gender) {
+                  setGenderAndAge(`${gender}, ${age} years`);
+                }
+              } else {
+                setGenderAndAge(null);
+              }
 
-            const resizedDetections = faceapi.resizeResults(detections, displaySize);
+              const resizedDetections = faceapi.resizeResults(detections, displaySize);
 
-            // Clear and draw detections on the canvas
-            const ctx = canvas.getContext("2d");
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            faceapi.draw.drawDetections(canvas, resizedDetections);
+              const ctx = canvas.getContext("2d");
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              
+              // Draw detections
+              faceapi.draw.drawDetections(canvas, resizedDetections);
+              
+              // Draw age and gender
+              resizedDetections.forEach(detection => {
+                const { age, gender, genderProbability } = detection;
+                new faceapi.draw.DrawTextField(
+                  [
+                    `${Math.round(age)} years`,
+                    `${gender} (${Math.round(genderProbability * 100)}%)`
+                  ],
+                  detection.detection?.box?.bottomLeft
+                ).draw(canvas);
+              });
+            }
+          } catch (error) {
+            console.error("Error in face detection:", error);
           }
         }, 100);
       }
@@ -69,31 +105,27 @@ const FaceDetection = () => {
 
     loadModels();
 
-    // Cleanup function
     return () => {
-      isComponentMounted = false; // Set mounted flag to false
+      isComponentMounted = false;
 
-      // Clear the detection interval
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
 
-      // Stop the video stream
       if (videoRef.current && videoRef.current.srcObject) {
         const tracks = videoRef.current.srcObject.getTracks();
         tracks.forEach(track => track.stop());
         videoRef.current.srcObject = null;
       }
 
-      // Clear the canvas
       if (canvasRef.current) {
         const ctx = canvasRef.current.getContext("2d");
         ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
       }
 
-      // Reset faces count
       setFaces(0);
+      setGenderAndAge(null);
 
       console.log("Component cleanup completed");
     };
@@ -101,7 +133,7 @@ const FaceDetection = () => {
 
   return (
     <div className="w-full h-screen bg-gray-200 p-16">
-      <h1 className="text-2xl font-bold text-center">Simple Detection</h1>
+      <h1 className="text-2xl font-bold text-center">Face Detection</h1>
       <div className="relative h-1/2 w-1/2 mx-auto">
         <video
           ref={videoRef}
@@ -114,9 +146,10 @@ const FaceDetection = () => {
           className="absolute top-0 left-0 w-full h-full"
         />
       </div>
-      <p className="text-center text-lg font-bold">
-        Number of faces: {faces}
-      </p>
+      <div className="text-center text-lg font-bold mt-4">
+        <p>Number of faces: {faces}</p>
+        {/* {genderAndAge && <p>Details: {genderAndAge}</p>} */}
+      </div>
     </div>
   );
 };
