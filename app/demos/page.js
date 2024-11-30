@@ -35,33 +35,33 @@ const Demos = () => {
     }, []);
 
     return (
-        <>
-            <nav className="flex flex-row gap-4 justify-center w-full absolute top-0">
+        <div className="bg-gray-800 text-pink-600 h-screen">
+            <nav className="flex flex-row gap-4 justify-center w-full absolute top-2">
                 <button 
-                    className={`cursor-pointer p-2 hover:bg-gray-100 rounded-md ${activeDemo === 'demoOne' ? 'bg-gray-200' : ''}`} 
+                    className={`cursor-pointer p-2 hover:bg-gray-600 rounded-md ${activeDemo === 'demoOne' ? 'bg-gray-600' : ''}`} 
                     onClick={() => handleDemoChange('demoOne')}
                 >
                     Demo One
                 </button>
                 <button 
-                    className={`cursor-pointer p-2 hover:bg-gray-100 rounded-md ${activeDemo === 'demoTwo' ? 'bg-gray-200' : ''}`}
+                    className={`cursor-pointer p-2 hover:bg-gray-600 rounded-md ${activeDemo === 'demoTwo' ? 'bg-gray-600' : ''}`}
                     onClick={() => handleDemoChange('demoTwo')}
                 >
                     Demo Two
                 </button>
                 <button 
-                    className={`cursor-pointer p-2 hover:bg-gray-100 rounded-md ${activeDemo === 'demoThree' ? 'bg-gray-200' : ''}`}
+                    className={`cursor-pointer p-2 hover:bg-gray-600 rounded-md ${activeDemo === 'demoThree' ? 'bg-gray-600' : ''}`}
                     onClick={() => handleDemoChange('demoThree')}
                 >
                     Demo Three
                 </button>
             </nav>
-            <div className="mt-16">
+            <div className="pt-16">
                 {activeDemo === 'demoOne' && <DemoOne />}
                 {activeDemo === 'demoTwo' && <DemoTwo />}
                 {activeDemo === 'demoThree' && <DemoThree />}
             </div>
-        </>
+        </div>
     );
 };
 

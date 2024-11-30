@@ -132,7 +132,7 @@ const FaceDetection = () => {
   }, []);
 
   return (
-    <div className="w-full h-screen bg-gray-200 p-16">
+    <div className="w-full h-screen p-16">
       <h1 className="text-2xl font-bold text-center">Face Detection</h1>
       <div className="relative h-1/2 w-1/2 mx-auto">
         <video
