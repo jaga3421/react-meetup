@@ -15,7 +15,10 @@ const FaceDetection = () => {
       const MODEL_URL = "https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@master/weights";
       
       try {
-        // Load all required models
+        
+        /**
+         *  Load the models from the CDN
+         */
         await Promise.all([
           faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
           faceapi.nets.ageGenderNet.loadFromUri(MODEL_URL),
@@ -30,6 +33,9 @@ const FaceDetection = () => {
       }
     };
 
+    /**
+     * Start the video stream
+     */
     const startVideo = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -56,6 +62,9 @@ const FaceDetection = () => {
         intervalRef.current = setInterval(async () => {
           if (!isComponentMounted) return;
 
+          /**
+           * Detect the faces
+           */
           try {
             const detections = await faceapi.detectAllFaces(
               video,
