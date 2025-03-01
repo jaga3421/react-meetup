@@ -6,6 +6,7 @@ import Thanks from './slides/Thanks';
 import HorizandalSmall from './slides/HorizandalSmall';
 import TimerComponent from './components/TimerComponent';
 import RBLogo from './components/RBLogo';
+import AnimatedImage from './components/AnimatedImage';
 
 export default function Page() {
   return (
@@ -16,20 +17,35 @@ export default function Page() {
       <Intro data={data.intro} />
       <SingleList data={data.agenda} />
 
-      {/* Demo  */}
-      <HorizandalLarge data={data.whatIsTensorFlow} />
-      <HorizandalSmall data={data.whyFaceDetection} />
-      <HorizandalLarge data={data.demo} />
+      {/* What is Cross Functional  */}
+      <HorizandalLarge data={data.whatIsCrossFunctionalApp} />
+      <HorizandalSmall data={data.whyCrossPlatformApps} />
 
-      {/* React Tensor */}
-      <HorizandalLarge data={data.reactTensor} /> 
-      <HorizandalLarge data={data.faceApiDeepDive} />
-      <HorizandalLarge data={data.minimumCode} />
+      {/* Electron, heavy wieight champion */}
+      <HorizandalLarge data={data.letsTalkElectron} /> 
 
-      {/* Ending */}
-      <HorizandalSmall data={data.considerations} />
+      {/* Tauri as Alternative tauriAsAlternative */}
+      <HorizandalLarge data={data.tauriAsAlternative} />
+
+      {/*  Webview and Rust */}
+      <HorizandalSmall data={data.understandingWebView} />
+      <HorizandalLarge data={data.theCatch} />
+
+      <HorizandalSmall data={data.understandingRust} />
+
+      {/* Arc */}
+
+      <HorizandalLarge data={data.arch} />
+
+      {/* API  */}
+      <HorizandalLarge data={data.tauriApiBreakdown}/>
+      <HorizandalLarge data={data.demo}/>
+
+
       <Thanks data={data.thank} />
       <TimerComponent timer={30} />
+
+      <AnimatedImage/>
     </main>
   );
 }

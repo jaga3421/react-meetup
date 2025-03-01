@@ -3,13 +3,13 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const data = [
-  // { key: "D", path: "/images/don.gif", alt: "don", width: "700px" },
-  // {
-  //   key: "T",
-  //   path: "/images/tony.gif",
-  //   alt: "tony",
-  //   width: "800px",
-  // },
+  { key: "D", path: "/images/don.gif", alt: "don", width: "700px" },
+  {
+    key: "T",
+    path: "/images/tony.gif",
+    alt: "tony",
+    width: "800px",
+  },
 
 ];
 

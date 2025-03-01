@@ -36,7 +36,7 @@ function HorizandalSubSlides({ data }) {
               key={index}
               className="w-[95%] flex-shrink-0  snap-center font-light text-left flex flex-row"
             >
-              <div className="cardPrimary">
+              <div className={`cardPrimary ${data.center ? "mx-auto" : ""}`}>
                 {slide?.title && <h3 className="text-5xl mb-16">{slide?.title}</h3>}
 
                 {slide.list?.map((content, index) => (

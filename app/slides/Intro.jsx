@@ -30,8 +30,10 @@ function Intro({ data }) {
             sequence={[
               "Jagadeesh",
               2000,
-              "ReactJS Bangalore",
-              4000,
+              "React Chennai ",
+              2000,
+              "Turing.com",
+              2000,
             ]}
             wrapper="span"
             cursor={true}
