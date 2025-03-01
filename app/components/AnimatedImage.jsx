@@ -4,12 +4,8 @@ import { motion } from "framer-motion";
 
 const data = [
   { key: "D", path: "/images/don.gif", alt: "don", width: "700px" },
-  {
-    key: "T",
-    path: "/images/tony.gif",
-    alt: "tony",
-    width: "800px",
-  },
+  { key: "V", path: "/images/vanakkan.png", alt: "vc", width: "700px" },
+  { key: "S", path: "/images/scooby.jpg", alt: "vc", width: "700px" },
 
 ];
 
