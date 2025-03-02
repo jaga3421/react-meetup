@@ -1,6 +1,6 @@
 export default {
   "intro": {
-    "title": "Tauri + React | Building better cross functional Apps",
+    "title": "Tauri + React | Building better cross platform Apps",
     "author": "Jagadeesh Jayachandran | React Chennai",
     "social": [
       {
