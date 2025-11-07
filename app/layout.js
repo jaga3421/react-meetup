@@ -4,8 +4,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "The Tauri System and React",
-  description: "Build Better Cross-Platform Apps by Jagadeesh",
+  title: "Building Offline-First Web Apps",
+  description: "Build Offline-First Web Apps by Jagadeesh",
 };
 
 export default function RootLayout({ children }) {
