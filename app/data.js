@@ -1,7 +1,7 @@
 export default {
   "intro": {
-    "title": "Tauri + React | Building better cross platform Apps",
-    "author": "Jagadeesh Jayachandran | React Chennai",
+    "title": "React Without the Internet: Building Offline-First Web Apps",
+    "author": "Jagadeesh J, Founding Engineer, Functionals.ai",
     "social": [
       {
         "icon": "FaLinkedin",
@@ -15,8 +15,8 @@ export default {
       },
       {
         "icon": "FaLink",
-        "content": "ja.gadee.sh",
-        "url": "https://ja.gadee.sh"
+        "content": "jaagdeesh-j.vercel.app",
+        "url": "https://jaagdeesh-j.vercel.app"
       }
     ]
   },
@@ -24,35 +24,35 @@ export default {
       "id": "agenda",
       "title": "Talk Agenda",
       "subtitles": [
-        "What are Cross-Platform Apps?",
-        "Electron - The Heavyweight Champion",
-        "Tauri - A Better Alternative",
-        "WebView and the Rust Connection",
-        "A Quick Look at Tauris APIs",
-        "Lets Build a Clipboard Manager",
+        "What is Offline-First?",
+        "Offline-First vs PWA",
+        "Core Concepts",
+        "Technical Stack",
+        "Common Libraries",
+        "Demo: Offline-First App",
         "Final Thoughts",
       ]
     },
 
 
-    "whatIsCrossFunctionalApp": {
-      "id": "whatIsCrossPlatformApp",
-      "title": "What are Cross-Platform Apps?",
+    "whatIsOfflineFirst": {
+      "id": "whatIsOfflineFirst",
+      "title": "What is Offline-First?",
       "horizandalSubSlides": [
         {
           "title": "The Basics",
           "list": [
             {
-              "title": "What is a Cross-Platform App?",
-              "content": "A software application that runs on multiple operating systems (Windows, macOS, Linux) using a single codebase."
+              "title": "What is Offline-First?",
+              "content": "An application design approach where the app works seamlessly even without an internet connection, treating offline as the default state."
             },
             {
               "title": "How Do They Work?",
-              "content": "Cross-platform apps leverage frameworks like Electron, Tauri, or Flutter to abstract OS-specific differences and provide a unified development approach."
+              "content": "Offline-first apps use local storage, caching, and background sync to ensure functionality regardless of network connectivity."
             },
             {
-              "title": "Why Build Cross-Platform?",
-              "content": "Develop once, deploy everywhere. Reduces development time, cost, and effort while ensuring consistency across devices."
+              "title": "Why Build Offline-First?",
+              "content": "Provides better user experience, reliability, and performance by eliminating dependency on network availability."
             }
           ]
         },
@@ -60,224 +60,308 @@ export default {
           "title": "Key Characteristics",
           "list": [
             {
-              "title": "Single Codebase",
-              "content": "Cross-platform frameworks allow developers to write code once and deploy it across multiple operating systems."
+              "title": "Local-First Architecture",
+              "content": "Data is stored and processed locally first, then synchronized with the server when connectivity is available."
             },
             {
-              "title": "Platform Independence",
-              "content": "Apps run smoothly across Windows, macOS, and Linux without needing major modifications."
+              "title": "Seamless Offline Experience",
+              "content": "Users can read, create, and edit data even when completely disconnected from the internet."
             },
             {
-              "title": "Cost & Time Efficiency",
-              "content": "Maintaining one codebase instead of multiple native applications reduces costs and speeds up development cycles."
+              "title": "Background Synchronization",
+              "content": "Changes are queued locally and automatically synced when the connection is restored, ensuring data consistency."
             }
           ]
         },
         {
-          "title": "Examples of Cross-Platform Apps",
+          "title": "Examples of Offline-First Apps",
           "list": [
             {
-              "title": "VS Code (Electron)",
-              "content": "A widely used code editor built using Electron, making it available on Windows, macOS, and Linux."
+              "title": "Google Docs",
+              "content": "Allows editing documents offline with changes syncing automatically when connection is restored."
             },
             {
-              "title": "Slack (Electron)",
-              "content": "A popular communication platform using Electron for a seamless cross-platform experience."
+              "title": "Notion",
+              "content": "Works offline with local caching, enabling users to access and edit their workspace without internet."
             },
             {
-              "title": "Tauri Apps",
-              "content": "Modern lightweight desktop applications built with Tauri that consume fewer system resources while maintaining cross-platform compatibility."
+              "title": "Linear",
+              "content": "Project management tool that functions offline, queuing actions and syncing when online."
             }
           ]
         }
       ]
     },
 
-    "whyCrossPlatformApps": {
-      "id": "whyCrossPlatformApps",
-      "title": "Why Companies Use Cross-Platform Apps?",
+    "offlineFirstVsPWA": {
+      "id": "offlineFirstVsPWA",
+      "title": "Offline-First vs PWA",
       "horizandalSubSlides": [
         {
-          "title": "Faster Development & Deployment",
-          "content": "A single codebase allows companies to build and release desktop apps quicker, reducing development time and effort compared to maintaining separate native apps for each OS."
+          "title": "What is PWA?",
+          "content": "Progressive Web Apps are web applications that use modern web capabilities to provide a native app-like experience. They can work offline but typically require online-first architecture with offline as a fallback."
         },
         {
-          "title": "Cost Efficiency",
-          "content": "Businesses save on development and maintenance costs by avoiding the need for separate teams managing Windows, macOS, and Linux versions of their software."
+          "title": "Key Difference",
+          "content": "PWA treats online as primary and offline as secondary. Offline-First treats offline as primary and online as enhancement. Offline-First apps work completely offline from the start, while PWAs add offline capabilities to online apps."
         },
         {
-          "title": "Wider Market Reach",
-          "content": "Cross-platform apps ensure accessibility across different operating systems, increasing user adoption and expanding the potential customer base."
+          "title": "Data Strategy",
+          "content": "PWAs cache resources for offline access but often need network for core functionality. Offline-First apps store all data locally first, then sync when online, ensuring full functionality without network."
         },
         {
-          "title": "Easier Maintenance & Updates",
-          "content": "Bug fixes, new features, and updates can be rolled out simultaneously across all platforms, ensuring consistency and a seamless user experience."
+          "title": "When to Use Each",
+          "content": "Use PWA for content-heavy apps that can tolerate limited offline functionality. Use Offline-First for data-critical apps, collaboration tools, or apps used in unreliable network conditions where full offline capability is essential."
         }
       ]
     },
 
-    "letsTalkElectron": {
-      "id": "letsTalkElectron",
-      "title": "Electron, the Heavyweight Champion",
+    "offlineFirstExamples": {
+      "id": "offlineFirstExamples",
+      "title": "Offline Apps in Action",
       "horizandalSubSlides": [
         {
-          "title": "What is Electron?",
+          "title": "WhatsApp Web",
+          "image": "https://images.hindustantimes.com/tech/img/2021/08/25/1600x900/background-5234461_1920_1628680367499_1629866749478.png",
           "list": [
             {
-              "title": "A Cross-Platform Desktop Framework",
-              "content": "Electron allows developers to build desktop applications using web technologies like HTML, CSS, and JavaScript."
+              "title": "Offline Experience",
+              "content": "View limited chat history stored locally. Recent conversations remain accessible even without internet connection."
             },
             {
-              "title": "Powered by Chromium & Node.js",
-              "content": "Each Electron app bundles a full Chromium browser and Node.js runtime, enabling powerful web-based experiences on desktop."
+              "title": "Send Messages Offline",
+              "content": "Compose and send messages while offline. Messages are queued locally and automatically sent when connection is restored."
             },
             {
-              "title": "Who Uses Electron?",
-              "content": "Popular apps like VS Code, Slack, Discord, and Figma are built with Electron, proving its capability to handle large-scale applications."
+              "title": "Seamless Sync",
+              "content": "Once online, queued messages are sent automatically and new messages are synced in the background without interrupting your workflow."
             }
           ]
         },
         {
-          "title": "The Darling of Developers",
+          "title": "Google Docs",
+          "image": "https://media.licdn.com/dms/image/v2/D4D12AQHVMcx-ckRzTQ/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1693712101604?e=2147483647&v=beta&t=x2x4Klr6G4MotvdA5Vknr0huNRVJi0dNJ4ojugImG-Q",
           "list": [
             {
-              "title": "Web Developers Feel at Home",
-              "content": "Electron lets web developers build desktop apps with the same stack they already know - HTML, CSS, and JavaScript."
+              "title": "Offline Experience",
+              "content": "View and edit documents completely offline. All changes are saved locally and synced automatically when you reconnect."
             },
             {
-              "title": "Cross-Platform by Default",
-              "content": "With a single codebase, apps run seamlessly on Windows, macOS, and Linux, eliminating the need for separate native apps."
+              "title": "Real-time Collaboration",
+              "content": "Continue editing while offline. When online, your changes merge seamlessly with others' edits, maintaining document integrity."
             },
             {
-              "title": "Rich Ecosystem & Community",
-              "content": "Backed by GitHub and a massive community, Electron has extensive documentation and thousands of libraries for rapid development."
+              "title": "Background Sync",
+              "content": "Changes made offline are queued and synchronized in the background, ensuring no data loss even with intermittent connectivity."
             }
           ]
         },
         {
-          "title": "Eats RAM for breakfast",
+          "title": "Notion",
+          "image": "https://ceblog.s3.amazonaws.com/wp-content/uploads/2023/05/18140417/notion-brand-logo.png",
           "list": [
             {
-              "title": "Resource Hog",
-              "content": "Electron apps bundle an entire Chromium instance, leading to high RAM and CPU usage, even for simple apps."
+              "title": "Offline Experience",
+              "content": "Access and edit your workspace offline. All pages and content you've viewed are cached locally for offline access."
             },
             {
-              "title": "Bloated App Sizes",
-              "content": "An Electron app can easily be 100-200MB due to the bundled browser, compared to native apps that are much smaller."
+              "title": "Full Functionality",
+              "content": "Create new pages, edit existing content, and organize your workspace even without internet. All changes are saved locally first."
             },
             {
-              "title": "Not Truly Native",
-              "content": "Despite looking like a desktop app, Electron apps don't integrate as deeply with the OS as true native applications."
-            }
-          ]
-        }
-      ]
-    },
-
-    "tauriAsAlternative": {
-      "id": "tauriAsAlternative",
-      "title": "Tauri - A Better Alternative",
-      "horizandalSubSlides": [
-        {
-          "title": "What is Tauri?",
-          "list": [
-            {
-              "title": "A Lightweight Cross-Platform Framework",
-              "content": "Tauri is an open-source framework that lets developers build desktop applications using web technologies, but with significantly lower resource consumption."
-            },
-            {
-              "title": "Built with Rust",
-              "content": "Tauri uses Rust for its backend, ensuring better memory safety, security, and performance compared to Electron’s Node.js runtime."
-            },
-            {
-              "title": "Who Uses Tauri?",
-              "content": "Tauri is gaining adoption among developers looking for an Electron alternative, with apps like AppFlowy and Sidekick showcasing its capabilities."
-            }
-          ]
-        },
-        {
-          "title": "How Tauri Works?",
-          "list": [
-            {
-              "title": "WebView Instead of Bundling a Browser",
-              "content": "Unlike Electron, which ships with Chromium, Tauri uses the system’s native WebView, reducing app size and memory consumption."
-            },
-            {
-              "title": "Rust-Powered Backend",
-              "content": "The backend logic is handled by Rust, which enables direct system access, better security, and superior performance compared to JavaScript-based Electron."
-            },
-            {
-              "title": "Secure API Communication",
-              "content": "Tauri restricts access to system APIs using permission-based access, making it more secure than Electron’s unrestricted Node.js access."
-            }
-          ]
-        },
-        {
-          "title": "Why Tauri is Better?",
-          "list": [
-            {
-              "title": "Smaller App Size",
-              "content": "Tauri apps are typically under 10MB, compared to Electron apps that can exceed 100MB due to the bundled Chromium engine."
-            },
-            {
-              "title": "Lower RAM & CPU Usage",
-              "content": "Since it relies on the system’s WebView instead of running a full browser instance, Tauri consumes far fewer resources."
-            },
-            {
-              "title": "Better Security",
-              "content": "Tauri apps are sandboxed by default, limiting what the application can access and reducing security risks."
-            },
-            {
-              "title": "Deep OS Integration",
-              "content": "Unlike Electron, which runs in a browser-like environment, Tauri apps can interact more efficiently with the underlying operating system."
+              "title": "Automatic Sync",
+              "content": "When connection is restored, all offline changes sync automatically, keeping your workspace up-to-date across all devices."
             }
           ]
         }
       ]
     },
 
-    "understandingWebView": {
-      "id": "understandingWebView",
-      "title": "Understanding WebView",
+    "coreConcepts": {
+      "id": "coreConcepts",
+      "title": "Core Concepts",
       "horizandalSubSlides": [
         {
-          "title": "What is WebView?",
-          "content": "WebView is a built-in component in operating systems that allows apps to display web content without needing a full browser."
+          "title": "Caching",
+          "list": [
+            {
+              "title": "Service Worker Caching",
+              "content": "Service Workers cache network requests and serve them offline. Use Cache API to store static assets, API responses, and dynamic content for offline access."
+            },
+            {
+              "title": "Cache Strategies",
+              "content": "Implement cache-first, network-first, or stale-while-revalidate strategies. Choose based on data freshness requirements and offline priority."
+            },
+            {
+              "title": "Cache Management",
+              "content": "Manage cache size, expiration, and versioning. Clean up old caches and update cached content when new versions are available."
+            }
+          ]
         },
         {
-          "title": "How Does WebView Work?",
-          "content": "It acts as a lightweight browser within an application, rendering HTML, CSS, and JavaScript inside a native app."
+          "title": "Local Database",
+          "list": [
+            {
+              "title": "IndexedDB Storage",
+              "content": "IndexedDB provides large-scale client-side storage for structured data. Store user data, application state, and cached content that persists across sessions."
+            },
+            {
+              "title": "LocalStorage & SessionStorage",
+              "content": "Use localStorage for persistent key-value data and sessionStorage for temporary data. Ideal for user preferences, settings, and small data sets."
+            },
+            {
+              "title": "Data Persistence",
+              "content": "Ensure data persists across browser sessions and app restarts. Implement data migration strategies when schema changes are needed."
+            }
+          ]
         },
         {
-          "title": "Why Use WebView?",
-          "content": "Using WebView eliminates the need to bundle a full browser engine, reducing app size and improving performance while maintaining web capabilities."
+          "title": "Offline/Online Detection",
+          "list": [
+            {
+              "title": "Online/Offline Events",
+              "content": "Listen to navigator.onLine and online/offline events to detect network status changes. React to connectivity changes in real-time to adjust app behavior."
+            },
+            {
+              "title": "Network Information API",
+              "content": "Use Network Information API to detect connection type, bandwidth, and quality. Optimize data usage based on connection capabilities."
+            },
+            {
+              "title": "Heartbeat Checks",
+              "content": "Implement periodic network checks by pinging a server endpoint. Detect intermittent connectivity and handle connection failures gracefully."
+            }
+          ]
         },
         {
-          "title": "WebView in Tauri vs. Electron",
-          "content": "Electron bundles Chromium, making apps heavier, while Tauri leverages the system’s native WebView, keeping apps lightweight and efficient."
+          "title": "Synchronization",
+          "list": [
+            {
+              "title": "Background Sync",
+              "content": "Use Background Sync API to queue actions when offline and execute them when connection is restored. Perfect for sending messages and syncing data."
+            },
+            {
+              "title": "Conflict Resolution",
+              "content": "Handle conflicts when offline changes conflict with server data. Implement strategies like last-write-wins, merge algorithms, or user intervention."
+            },
+            {
+              "title": "Optimistic Updates",
+              "content": "Update UI immediately when user performs actions, then sync with server. Rollback changes if sync fails, providing instant feedback."
+            }
+          ]
         }
       ]
     },
 
-    "understandingRust": {
-      "id": "understandingRust",
-      "title": "Understanding Rust",
+    "demoWithoutOffline": {
+      "id": "demoWithoutOffline",
+      "title": "Demo - App without offline support",
+      "copy": "See how an app behaves without offline capabilities.",
+      "link": "/demo-1",
+      "linkText": "Demo app"
+    },
+
+    "technicalStack": {
+      "id": "technicalStack",
+      "title": "Technical Stack",
       "horizandalSubSlides": [
         {
-          "title": "What is Rust?",
-          "content": "Rust is a modern, systems-level programming language focused on performance, memory safety, and concurrency, without a garbage collector."
+          "title": "Service Workers",
+          "code": "// Register Service Worker\nif ('serviceWorker' in navigator) {\n  navigator.serviceWorker.register('/sw.js')\n    .then(registration => {\n      console.log('SW registered');\n    });\n}\n\n// Cache API\nself.addEventListener('fetch', event => {\n  event.respondWith(\n    caches.match(event.request)\n      .then(response => response || fetch(event.request))\n  );\n});",
+          "language": "javascript",
+          "list": [
+            {
+              "title": "What is Service Worker?",
+              "content": "A JavaScript file that runs in the background, intercepting network requests and enabling offline functionality."
+            },
+            {
+              "title": "Cache API",
+              "content": "Service Workers use the Cache API to store network requests and serve them offline, enabling offline-first functionality."
+            },
+            {
+              "title": "Background Sync",
+              "content": "Service Workers can queue actions when offline and execute them when connection is restored using Background Sync API."
+            }
+          ]
         },
         {
-          "title": "Why is Rust Fast?",
-          "content": "Rust compiles directly to machine code, eliminating runtime overhead and making it as fast as C and C++."
+          "title": "IndexedDB",
+          "code": "// Open IndexedDB database\nconst request = indexedDB.open('NotesDB', 1);\n\nrequest.onupgradeneeded = (event) => {\n  const db = event.target.result;\n  const objectStore = db.createObjectStore('notes', {\n    keyPath: 'id',\n    autoIncrement: true\n  });\n};\n\n// Add note\nconst addNote = (note) => {\n  const transaction = db.transaction(['notes'], 'readwrite');\n  const objectStore = transaction.objectStore('notes');\n  return objectStore.add(note);\n};\n\n// Get all notes\nconst getAllNotes = () => {\n  const transaction = db.transaction(['notes'], 'readonly');\n  const objectStore = transaction.objectStore('notes');\n  return objectStore.getAll();\n};",
+          "language": "javascript",
+          "list": [
+            {
+              "title": "What is IndexedDB?",
+              "content": "A low-level API for client-side storage of large amounts of structured data, including files and blobs."
+            },
+            {
+              "title": "Why Use IndexedDB?",
+              "content": "IndexedDB provides large-scale storage for structured data, perfect for storing user data, application state, and cached content."
+            },
+            {
+              "title": "Offline Data Storage",
+              "content": "IndexedDB persists data across browser sessions, making it ideal for offline-first applications that need to store data locally."
+            }
+          ]
         },
         {
-          "title": "How Does Rust Ensure Safety?",
-          "content": "Rust prevents memory leaks and security vulnerabilities with strict ownership, borrowing, and type safety rules."
+          "title": "Network Detection & Sync",
+          "code": "// Detect online/offline status\nconst [isOnline, setIsOnline] = useState(navigator.onLine);\n\nuseEffect(() => {\n  const handleOnline = () => setIsOnline(true);\n  const handleOffline = () => setIsOnline(false);\n  \n  window.addEventListener('online', handleOnline);\n  window.addEventListener('offline', handleOffline);\n  \n  return () => {\n    window.removeEventListener('online', handleOnline);\n    window.removeEventListener('offline', handleOffline);\n  };\n}, []);\n\n// Sync when online\nuseEffect(() => {\n  if (isOnline) {\n    syncPendingChanges();\n  }\n}, [isOnline]);\n\n// Queue changes when offline\nconst saveNote = async (note) => {\n  await saveToIndexedDB(note);\n  if (!isOnline) {\n    queueForSync('add', note);\n  } else {\n    syncToServer(note);\n  }\n};",
+          "language": "javascript",
+          "list": [
+            {
+              "title": "Online/Offline Detection",
+              "content": "Listen to browser online/offline events to detect network status changes and adjust app behavior accordingly."
+            },
+            {
+              "title": "Automatic Sync",
+              "content": "When connection is restored, automatically sync pending changes from local storage to the server."
+            },
+            {
+              "title": "Queue Management",
+              "content": "Queue user actions when offline and execute them when online, ensuring no data loss during offline periods."
+            }
+          ]
         },
         {
-          "title": "Why Rust in Tauri?",
-          "content": "Tauri uses Rust to handle system-level tasks securely and efficiently, making apps smaller, faster, and safer than Electron."
+          "title": "React Hooks",
+          "code": "// Custom hook for offline-first notes\nconst useNotes = () => {\n  const [notes, setNotes] = useState([]);\n  const [isOnline, setIsOnline] = useState(navigator.onLine);\n\n  useEffect(() => {\n    // Load from IndexedDB first\n    loadFromIndexedDB().then(setNotes);\n    \n    // Then sync with server if online\n    if (isOnline) {\n      syncWithServer();\n    }\n  }, [isOnline]);\n\n  const addNote = async (note) => {\n    // Save to IndexedDB immediately\n    await saveToIndexedDB(note);\n    setNotes(prev => [...prev, note]);\n    \n    // Queue for sync if offline\n    if (!isOnline) {\n      queueForSync('add', note);\n    }\n  };\n\n  return { notes, addNote };\n};",
+          "language": "javascript",
+          "list": [
+            {
+              "title": "State Management",
+              "content": "Use React hooks like useState and useEffect to manage application state and handle offline/online transitions."
+            },
+            {
+              "title": "Custom Hooks",
+              "content": "Create custom hooks to encapsulate offline-first logic, making it reusable across components and easier to maintain."
+            },
+            {
+              "title": "Optimistic Updates",
+              "content": "Update UI immediately when user performs actions, then sync with server in the background for better user experience."
+            }
+          ]
+        }
+      ]
+    },
+
+    "usefulLibraries": {
+      "id": "usefulLibraries",
+      "title": "Useful Libraries",
+      "horizandalSubSlides": [
+        {
+          "title": "Workbox",
+          "content": "A set of libraries and Node modules that make it easy to cache assets and take full advantage of Service Workers. Simplifies Service Worker management and provides powerful caching strategies."
+        },
+        {
+          "title": "Dexie.js",
+          "content": "A wrapper library for IndexedDB that provides a cleaner, promise-based API. Makes IndexedDB operations simpler and more intuitive for React developers."
+        },
+        {
+          "title": "React Query / SWR",
+          "content": "Data fetching libraries with built-in offline support. Automatically cache data, handle background updates, and sync when connection is restored."
+        },
+        {
+          "title": "PouchDB / RxDB",
+          "content": "Local-first databases that sync with remote databases. PouchDB syncs with CouchDB, while RxDB provides real-time sync capabilities for offline-first React apps."
         }
       ]
     },
@@ -287,142 +371,36 @@ export default {
       "title": "Okay.. What's the catch?",
       "horizandalSubSlides": [
         {
-          "list": 
-          [
-            {
-              "content": "",
-             "images": [
-              './images/webview-vs-electron.png',
-             ]
-            }
-          ]
-        }
-      
-      ]
-    },
-
-    "arch": {
-      "id": "arch",
-      "title": "How Tauri Works",
-      "center": true,
-      "horizandalSubSlides": [
-        {
-          "list": 
-          [
-            {
-              "content": "",
-             "images": [
-              './images/arc.png',
-             ]
-            }
-          ]
-        }
-      
-      ]
-    },
-
-  
-    "tauriApiBreakdown": {
-      "id": "tauriApiBreakdown",
-      "title": "Tauri APIs",
-      "horizandalSubSlides": [
-        {
-          "title": "System & App Management",
+          "title": "Challenges of Offline-First",
           "list": [
             {
-              "title": "app",
-              "content": "Retrieve app metadata, manage lifecycle events, and control app state."
+              "title": "Complexity",
+              "content": "Building offline-first apps requires handling caching, sync, conflict resolution, and state management, adding complexity to the codebase."
             },
             {
-              "title": "os",
-              "content": "Get OS details like platform, version, and architecture for system-specific logic."
+              "title": "Storage Limits",
+              "content": "Browser storage has limits. IndexedDB typically allows 50% of disk space, but you need to manage storage quotas and cleanup strategies."
             },
             {
-              "title": "path",
-              "content": "Access common system paths like home, temp, downloads, and config directories."
-            }
-          ]
-        },
-        {
-          "title": "File & Process Handling",
-          "list": [
-            {
-              "title": "fs",
-              "content": "Perform file operations like read, write, delete, and directory management securely."
+              "title": "Conflict Resolution",
+              "content": "When offline changes conflict with server data, you need robust strategies like last-write-wins, merge algorithms, or user intervention."
             },
             {
-              "title": "process",
-              "content": "Execute system processes, manage running applications, and handle process termination."
-            },
-            {
-              "title": "shell",
-              "content": "Run terminal commands safely with sandboxing to prevent security risks."
-            }
-          ]
-        },
-        {
-          "title": "User Interaction & UI Control",
-          "list": [
-            {
-              "title": "dialog",
-              "content": "Open native file pickers, alerts, and confirmation dialogs for user interactions."
-            },
-            {
-              "title": "notification",
-              "content": "Send desktop notifications with system-level visibility and custom messages."
-            },
-            {
-              "title": "window",
-              "content": "Control application windows—resize, minimize, maximize, focus, or set always-on-top behavior."
-            }
-          ]
-        },
-        {
-          "title": "Performance & Background Tasks",
-          "list": [
-            {
-              "title": "globalShortcut",
-              "content": "Register and handle system-wide keyboard shortcuts for quick actions."
-            },
-            {
-              "title": "event",
-              "content": "Send and listen for real-time events between frontend and backend components."
-            },
-            {
-              "title": "http",
-              "content": "Make network requests securely, bypass CORS restrictions, and fetch APIs efficiently."
-            }
-          ]
-        },
-        {
-          "title": "Clipboard & Updates",
-          "list": [
-            {
-              "title": "clipboard",
-              "content": "Read and write text data to the system clipboard for easy copy-paste."
-            },
-            {
-              "title": "updater",
-              "content": "Enable secure auto-updates for the application, keeping users on the latest version."
-            },
-            {
-              "title": "tauri",
-              "content": "Core API that integrates frontend WebView with backend Rust for secure app operations."
+              "title": "Testing Challenges",
+              "content": "Testing offline scenarios requires simulating network failures, slow connections, and sync conflicts, making testing more complex."
             }
           ]
         }
       ]
     },
 
-    "demo": {
-      "id": "demo",
-      "title": "Let's Make a simple app?",
-      "horizandalSubSlides": [
-        {
-          
-        }
-      
-      ]
+
+    "demoWithOffline": {
+      "id": "demoWithOffline",
+      "title": "Demo - App with offline capabilities",
+      "copy": "Let's see how an offline-first app will behave",
+      "link": "/demo-1",
+      "linkText": "Demo app"
     },
   
 
@@ -441,13 +419,13 @@ export default {
         },
         {
           icon: "FaLink",
-          content: "ja.gadee.sh",
-          url: "https://ja.gadee.sh",
+          content: "jaagdeesh-j.vercel.app",
+          url: "https://jaagdeesh-j.vercel.app",
         },
         {
           icon: "IoMailSharp",
-          content: "j@gadee.sh",
-          url: "mailto:j@gadee.sh",
+          content: "jagadeesh.jkp@gmail.com",
+          url: "mailto:jagadeesh.jkp@gmail.com",
         },
       ],
     },

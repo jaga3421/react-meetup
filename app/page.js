@@ -4,6 +4,7 @@ import SingleList from './slides/SingleList';
 import HorizandalLarge from './slides/HorizandalLarge';
 import Thanks from './slides/Thanks';
 import HorizandalSmall from './slides/HorizandalSmall';
+import DemoLink from './slides/DemoLink';
 import TimerComponent from './components/TimerComponent';
 import RBLogo from './components/RBLogo';
 import AnimatedImage from './components/AnimatedImage';
@@ -17,29 +18,26 @@ export default function Page() {
       <Intro data={data.intro} />
       <SingleList data={data.agenda} />
 
-      {/* What is Cross Functional  */}
-      <HorizandalLarge data={data.whatIsCrossFunctionalApp} />
-      <HorizandalSmall data={data.whyCrossPlatformApps} />
+      {/* What is Offline-First  */}
+      <HorizandalLarge data={data.whatIsOfflineFirst} />
+      <HorizandalSmall data={data.offlineFirstVsPWA} />
 
-      {/* Electron, heavy wieight champion */}
-      <HorizandalLarge data={data.letsTalkElectron} /> 
+      {/* Offline-First Apps in Action */}
+      <HorizandalLarge data={data.offlineFirstExamples} /> 
 
-      {/* Tauri as Alternative tauriAsAlternative */}
-      <HorizandalLarge data={data.tauriAsAlternative} />
+      {/* Demo - App without offline support */}
+      <DemoLink data={data.demoWithoutOffline} />
 
-      {/*  Webview and Rust */}
-      <HorizandalSmall data={data.understandingWebView} />
+      {/* Core Concepts */}
+      <HorizandalLarge data={data.coreConcepts} />
+
+      {/* Technical Stack */}
+      <HorizandalLarge data={data.technicalStack} />
       <HorizandalLarge data={data.theCatch} />
 
-      <HorizandalSmall data={data.understandingRust} />
+      <HorizandalSmall data={data.usefulLibraries} />
 
-      {/* Arc */}
-
-      <HorizandalLarge data={data.arch} />
-
-      {/* API  */}
-      <HorizandalLarge data={data.tauriApiBreakdown}/>
-      <HorizandalLarge data={data.demo}/>
+      <DemoLink data={data.demoWithOffline}/>
 
 
       <Thanks data={data.thank} />
