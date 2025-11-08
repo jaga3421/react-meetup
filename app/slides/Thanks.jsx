@@ -36,7 +36,7 @@ function Thanks({ data }) {
           {data.title}
         </MotionH1>
 
-        {/* Horizandal slides */}
+        {/* QR Code */}
         <motion.div
           className="flex space-x-4  mx-auto items-center justify-center my-4 bg-slate-100 p-4"
           variants={VariantStaggerParent}
@@ -44,8 +44,9 @@ function Thanks({ data }) {
           animate={inView ? "show" : "hidden"}
 
         >
-          <Image src="/images/jaga3421.png" width={300} height={300} />
+          <Image src="/images/jaga3421.png" width={560} height={560} />
         </motion.div>
+        {/* Social Links */}
         <motion.div
           className="flex space-x-4 w-full mx-auto"
           variants={VariantStaggerParent}
@@ -54,7 +55,7 @@ function Thanks({ data }) {
         >
           <motion.div
             variants={VariantStaggerChildShow}
-            className="max-w-2xl mx-auto mt-2 flex flex-col space-y-2"
+            className="max-w-2xl mx-auto mt-2 flex flex-row items-center justify-center space-x-6 flex-wrap gap-4"
           >
             {data.social.map((item, index) => (
               <a
