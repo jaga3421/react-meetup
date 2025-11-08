@@ -15,8 +15,8 @@ export default {
       },
       {
         "icon": "FaLink",
-        "content": "jaagdeesh-j.vercel.app",
-        "url": "https://jaagdeesh-j.vercel.app"
+        "content": "jagadeesh-j.vercel.app",
+        "url": "https://jagadeesh-j.vercel.app"
       }
     ]
   },
@@ -145,10 +145,6 @@ export default {
             {
               "title": "Offline Experience",
               "content": "View and edit documents completely offline. All changes are saved locally and synced automatically when you reconnect."
-            },
-            {
-              "title": "Real-time Collaboration",
-              "content": "Continue editing while offline. When online, your changes merge seamlessly with others' edits, maintaining document integrity."
             },
             {
               "title": "Background Sync",
@@ -399,7 +395,7 @@ export default {
       "id": "demoWithOffline",
       "title": "Demo - App with offline capabilities",
       "copy": "Let's see how an offline-first app will behave",
-      "link": "/demo-1",
+      "link": "/demo-2",
       "linkText": "Demo app"
     },
   
@@ -419,8 +415,8 @@ export default {
         },
         {
           icon: "FaLink",
-          content: "jaagdeesh-j.vercel.app",
-          url: "https://jaagdeesh-j.vercel.app",
+          content: "jagadeesh-j.vercel.app",
+          url: "https://jagadeesh-j.vercel.app",
         },
         {
           icon: "IoMailSharp",
