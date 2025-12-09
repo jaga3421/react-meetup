@@ -3,8 +3,7 @@ import Intro from './slides/Intro';
 import SingleList from './slides/SingleList';
 import HorizandalLarge from './slides/HorizandalLarge';
 import Thanks from './slides/Thanks';
-import HorizandalSmall from './slides/HorizandalSmall';
-import DemoLink from './slides/DemoLink';
+import InteractiveCodeSlide from './slides/InteractiveCodeSlide';
 import TimerComponent from './components/TimerComponent';
 import RBLogo from './components/RBLogo';
 import AnimatedImage from './components/AnimatedImage';
@@ -18,27 +17,29 @@ export default function Page() {
       <Intro data={data.intro} />
       <SingleList data={data.agenda} />
 
-      {/* What is Offline-First  */}
-      <HorizandalLarge data={data.whatIsOfflineFirst} />
-      <HorizandalSmall data={data.offlineFirstVsPWA} />
+      {/* What is any? */}
+      <HorizandalLarge data={data.whatIsAny} />
 
-      {/* Offline-First Apps in Action */}
-      <HorizandalLarge data={data.offlineFirstExamples} /> 
+      {/* The Problems with any - Interactive Quiz */}
+      <InteractiveCodeSlide data={data.problemsWithAny} />
 
-      {/* Demo - App without offline support */}
-      <DemoLink data={data.demoWithoutOffline} />
+      {/* Where any Creeps In */}
+      <HorizandalLarge data={data.whereAnyCreepsIn} />
 
-      {/* Core Concepts */}
-      <HorizandalLarge data={data.coreConcepts} />
+      {/* Escape Routes: Avoiding any - Interactive Refactoring */}
+      <InteractiveCodeSlide data={data.escapeRoutes} />
 
-      {/* Technical Stack */}
-      <HorizandalLarge data={data.technicalStack} />
-      <HorizandalLarge data={data.theCatch} />
+      {/* TypeScript Compiler Options */}
+      <HorizandalLarge data={data.compilerOptions} />
 
-      <HorizandalSmall data={data.usefulLibraries} />
+      {/* The Final Boss: never - Interactive Quiz */}
+      <InteractiveCodeSlide data={data.finalBossNever} />
 
-      <DemoLink data={data.demoWithOffline}/>
+      {/* Live-Code Challenge */}
+      <InteractiveCodeSlide data={data.liveCodeChallenge} />
 
+      {/* Wrap-up & Key Takeaways */}
+      <HorizandalLarge data={data.wrapUp} />
 
       <Thanks data={data.thank} />
       <TimerComponent timer={30} />
