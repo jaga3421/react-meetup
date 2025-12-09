@@ -1,4 +1,18 @@
-// IndexedDB utility for offline-first storage
+/**
+ * INDEXEDDB SERVICE - LOCAL DATABASE FOR OFFLINE-FIRST
+ * 
+ * KEY DIFFERENCE FROM DEMO-1:
+ * DEMO-1: No local storage - data only on server
+ * DEMO-2: IndexedDB stores all notes locally - works offline!
+ * 
+ * Why IndexedDB?
+ * - Can store large amounts of structured data
+ * - Persists across browser sessions
+ * - Much more powerful than localStorage
+ * - Perfect for offline-first apps
+ * 
+ * This is where your data lives when offline!
+ */
 const DB_NAME = "NotesDB";
 const DB_VERSION = 1;
 const STORE_NAME = "notes";

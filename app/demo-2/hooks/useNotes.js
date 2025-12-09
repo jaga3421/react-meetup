@@ -1,4 +1,17 @@
 "use client";
+/**
+ * OFFLINE-FIRST NOTES HOOK
+ * 
+ * KEY DIFFERENCES FROM DEMO-1:
+ * 1. Loads from IndexedDB FIRST (offline-first approach)
+ * 2. Optimistic updates - UI updates immediately, syncs later
+ * 3. Queue management - Queues actions when offline
+ * 4. Auto-sync - Automatically syncs when back online
+ * 5. Data persistence - Data survives page refreshes
+ * 
+ * DEMO-1: Fetches from server → Breaks when offline
+ * DEMO-2: Loads from IndexedDB → Works offline → Syncs when online
+ */
 import { useState, useEffect, useCallback, useRef } from "react";
 import { fetchNotes, createNote, updateNote, deleteNote } from "../services/api";
 import {
@@ -22,6 +35,14 @@ export const useNotes = () => {
   const isOnline = useNetworkStatus();
   const isLoadingRef = useRef(false);
 
+  /**
+   * OFFLINE-FIRST LOADING STRATEGY
+   * 
+   * DEMO-1: fetchNotes() → Breaks if offline
+   * DEMO-2: getAllNotes() → Works offline → Then syncs if online
+   * 
+   * This is the core of offline-first: data lives locally first!
+   */
   // Load notes from IndexedDB first, then sync with server if online
   const loadNotes = useCallback(async () => {
     // Prevent multiple simultaneous calls
@@ -75,6 +96,15 @@ export const useNotes = () => {
     }
   }, [isOnline]);
 
+  /**
+   * AUTO-SYNC QUEUE - MAGIC OF OFFLINE-FIRST
+   * 
+   * When user comes back online, this automatically syncs all queued actions.
+   * User doesn't need to do anything - it just works!
+   * 
+   * DEMO-1: User loses data when offline
+   * DEMO-2: User's actions are queued and sync automatically
+   */
   // Sync pending queue actions with server
   const syncQueue = useCallback(async () => {
     if (!isOnline || syncing) return;
@@ -87,6 +117,8 @@ export const useNotes = () => {
         setSyncing(false);
         return;
       }
+      
+      // Process each queued action (create, update, delete)
 
       for (const item of queue) {
         try {
@@ -128,6 +160,15 @@ export const useNotes = () => {
     }
   }, [isOnline, syncing]);
 
+  /**
+   * OPTIMISTIC UPDATES - KEY FEATURE OF OFFLINE-FIRST
+   * 
+   * DEMO-1: createNote() → Wait for server → Update UI
+   * DEMO-2: Save locally → Update UI immediately → Sync later
+   * 
+   * This gives instant feedback - user sees changes immediately!
+   * The sync happens in the background, user doesn't wait.
+   */
   // Create a new note (optimistic update)
   const addNote = useCallback(
     async (note) => {
@@ -142,29 +183,32 @@ export const useNotes = () => {
         updatedAt: new Date().toISOString(),
       };
 
-      // Save to IndexedDB immediately (optimistic update)
+      // ⚡ OPTIMISTIC UPDATE: Save to IndexedDB immediately
+      // UI updates instantly, user doesn't wait for server
       await saveNote(newNote);
       setNotes((prev) => [...prev, newNote]);
 
-      // If online, sync with server
+      // 🔄 SYNC STRATEGY: Online vs Offline
       if (isOnline) {
         try {
+          // Online: Sync immediately with server
           const serverNote = await createNote(note);
-          // Update with server ID
+          // Update with server ID (server is source of truth)
           await deleteNoteFromDB(tempId);
           await saveNote(serverNote);
           setNotes((prev) =>
             prev.map((n) => (n.id === tempId ? serverNote : n))
           );
         } catch (err) {
-          // If sync fails, queue for later
+          // If sync fails, queue for later retry
           await addToSyncQueue({
             type: "create",
             data: newNote,
           });
         }
       } else {
-        // Queue for sync when online
+        // 📦 OFFLINE: Queue for sync when back online
+        // This ensures no data loss - action is saved and will sync later
         await addToSyncQueue({
           type: "create",
           data: newNote,

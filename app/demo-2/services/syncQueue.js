@@ -1,4 +1,19 @@
-// Sync queue for managing offline actions
+/**
+ * SYNC QUEUE SERVICE - ENSURES NO DATA LOSS
+ * 
+ * KEY DIFFERENCE FROM DEMO-1:
+ * DEMO-1: Actions fail when offline - data is lost
+ * DEMO-2: Actions are queued when offline - syncs when back online
+ * 
+ * How it works:
+ * 1. User creates/edits/deletes note while offline
+ * 2. Action is saved to IndexedDB (optimistic update)
+ * 3. Action is also queued in sync queue
+ * 4. When back online, queue processes automatically
+ * 5. All queued actions sync with server
+ * 
+ * This ensures no data loss - user's work is never lost!
+ */
 const QUEUE_STORE_NAME = "syncQueue";
 
 let queueDB = null;

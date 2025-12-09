@@ -1,7 +1,22 @@
 "use client";
+/**
+ * NETWORK STATUS HOOK - RELIABLE ONLINE/OFFLINE DETECTION
+ * 
+ * KEY DIFFERENCE FROM DEMO-1:
+ * DEMO-1: Doesn't check network status - just fails when offline
+ * DEMO-2: Actively detects network status - adapts behavior accordingly
+ * 
+ * Why not just use navigator.onLine?
+ * - navigator.onLine can be false even when online
+ * - It only checks network adapter, not actual connectivity
+ * - We verify with actual network requests for reliability
+ * 
+ * This ensures we know when we're actually online/offline!
+ */
 import { useState, useEffect } from "react";
 
 // Helper function to check actual network connectivity
+// Uses real fetch request, not just navigator.onLine
 const checkNetworkStatus = async () => {
   try {
     // Create an AbortController for timeout

@@ -1,4 +1,16 @@
 "use client";
+/**
+ * DEMO-2 PAGE - OFFLINE-FIRST NOTES APP
+ * 
+ * KEY DIFFERENCES FROM DEMO-1:
+ * 1. Registers Service Worker for caching
+ * 2. Shows network status indicator
+ * 3. Shows sync status
+ * 4. Works completely offline
+ * 
+ * DEMO-1: Breaks when offline ❌
+ * DEMO-2: Works perfectly offline ✅
+ */
 import { useState, useEffect } from "react";
 import { useNotes } from "./hooks/useNotes";
 import NoteEditor from "./components/NoteEditor";
@@ -19,6 +31,16 @@ export default function Demo2() {
   const [editingNote, setEditingNote] = useState(null);
   const [showEditor, setShowEditor] = useState(false);
 
+  /**
+   * SERVICE WORKER REGISTRATION
+   * 
+   * Service Worker enables:
+   * - Caching API requests
+   * - Serving cached responses when offline
+   * - Background sync capabilities
+   * 
+   * This is what makes the app work offline!
+   */
   // Register Service Worker
   useEffect(() => {
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
