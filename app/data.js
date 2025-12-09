@@ -1,6 +1,6 @@
 export default {
   "intro": {
-    "title": "React Without the Internet: Building Offline-First Web Apps",
+    "title": "From Any to Never: Escaping the Type Safety Black Hole",
     "author": "Jagadeesh J, Founding Engineer, Functionals.ai",
     "social": [
       {
@@ -24,381 +24,450 @@ export default {
       "id": "agenda",
       "title": "Talk Agenda",
       "subtitles": [
-        "What is Offline-First?",
-        "Offline-First vs PWA",
-        "Core Concepts",
-        "Technical Stack",
-        "Common Libraries",
-        "Demo: Offline-First App",
-        "Final Thoughts",
-      ]
-    },
+      "What is `any`?",
+      "The Problems with `any`",
+      "Where `any` Creeps In",
+      "Escape Routes: Avoiding `any`",
+      "The Final Boss: `never`",
+      "Wrap-up & Key Takeaways"
+    ]
+  },
 
-
-    "whatIsOfflineFirst": {
-      "id": "whatIsOfflineFirst",
-      "title": "What is Offline-First?",
+  "whatIsAny": {
+    "id": "whatIsAny",
+    "title": "What is `any`?",
       "horizandalSubSlides": [
         {
-          "title": "The Basics",
+        "title": "Definition & Purpose",
           "list": [
             {
-              "title": "What is Offline-First?",
-              "content": "An application design approach where the app works seamlessly even without an internet connection, treating offline as the default state."
+            "title": "What is `any`?",
+            "content": "TypeScript's escape hatch - a type that represents any value. It disables type checking for that value."
             },
             {
-              "title": "How Do They Work?",
-              "content": "Offline-first apps use local storage, caching, and background sync to ensure functionality regardless of network connectivity."
+            "title": "Why Does It Exist?",
+            "content": "Designed for gradual migration from JavaScript, handling untyped code, and providing flexibility during development."
             },
             {
-              "title": "Why Build Offline-First?",
-              "content": "Provides better user experience, reliability, and performance by eliminating dependency on network availability."
+            "title": "When Is It Used?",
+            "content": "Legacy code migration, quick fixes, third-party libraries without types, and situations where types are unknown."
             }
           ]
         },
         {
-          "title": "Key Characteristics",
+        "title": "Quick Example",
+        "code": "// any allows any value\nlet value: any = 42;\nvalue = 'hello';\nvalue = true;\n\n// No type checking!\nvalue.foo.bar.baz; // No error\n\n// Compare with proper typing\nlet typed: number = 42;\ntyped = 'hello'; // Error!",
+        "language": "typescript",
           "list": [
             {
-              "title": "Local-First Architecture",
-              "content": "Data is stored and processed locally first, then synchronized with the server when connectivity is available."
+            "title": "Flexibility",
+            "content": "`any` accepts any value type - numbers, strings, objects, functions, anything."
             },
             {
-              "title": "Seamless Offline Experience",
-              "content": "Users can read, create, and edit data even when completely disconnected from the internet."
+            "title": "No Type Checking",
+            "content": "TypeScript completely skips type checking for `any` values, allowing any operation."
             },
             {
-              "title": "Background Synchronization",
-              "content": "Changes are queued locally and automatically synced when the connection is restored, ensuring data consistency."
+            "title": "The Trade-off",
+            "content": "You gain flexibility but lose all the benefits of TypeScript's type safety."
             }
           ]
         },
         {
-          "title": "Examples of Offline-First Apps",
+        "title": "Common Use Cases",
           "list": [
             {
-              "title": "Google Docs",
-              "content": "Allows editing documents offline with changes syncing automatically when connection is restored."
-            },
-            {
-              "title": "Notion",
-              "content": "Works offline with local caching, enabling users to access and edit their workspace without internet."
-            },
-            {
-              "title": "Linear",
-              "content": "Project management tool that functions offline, queuing actions and syncing when online."
+            "title": "Legacy Code Migration",
+            "content": "When migrating JavaScript to TypeScript, `any` helps bridge the gap temporarily."
+          },
+          {
+            "title": "Third-party Libraries",
+            "content": "Libraries without type definitions often force you to use `any` or create your own types."
+          },
+          {
+            "title": "Dynamic Content",
+            "content": "JSON parsing, API responses with unknown structure, or user input often leads to `any`."
+          },
+          {
+            "title": "Quick Prototyping",
+            "content": "Developers sometimes use `any` to move fast, but it becomes technical debt."
             }
           ]
         }
       ]
     },
 
-    "offlineFirstVsPWA": {
-      "id": "offlineFirstVsPWA",
-      "title": "Offline-First vs PWA",
-      "horizandalSubSlides": [
+  "problemsWithAny": {
+    "id": "problemsWithAny",
+    "title": "Quiz 1: What does this return?",
+    "code": "function processData(data: any) {\n  return data.value + 10;\n}\n\nprocessData({ value: 5 });    // 15\nprocessData({ value: '5' });  // '510' (string!)\nprocessData({});              // NaN\nprocessData(null);            // Error!",
+    "language": "typescript",
+    "theory": {
+      "heading": "The Problems with `any`",
+      "subHeading": "Type Safety Breakdown",
+      "copy": "When you use `any`, TypeScript stops protecting you. This means you lose all the benefits of type safety that TypeScript provides.",
+      "list": [
         {
-          "title": "What is PWA?",
-          "content": "Progressive Web Apps are web applications that use modern web capabilities to provide a native app-like experience. They can work offline but typically require online-first architecture with offline as a fallback."
+          "title": "No Type Checking",
+          "content": "TypeScript won't catch errors at compile time. Bugs appear at runtime instead."
         },
         {
-          "title": "Key Difference",
-          "content": "PWA treats online as primary and offline as secondary. Offline-First treats offline as primary and online as enhancement. Offline-First apps work completely offline from the start, while PWAs add offline capabilities to online apps."
+          "title": "No Autocomplete",
+          "content": "Your IDE can't help you with suggestions, method names, or property access."
         },
         {
-          "title": "Data Strategy",
-          "content": "PWAs cache resources for offline access but often need network for core functionality. Offline-First apps store all data locally first, then sync when online, ensuring full functionality without network."
+          "title": "Runtime Errors",
+          "content": "Operations that should fail at compile time only fail when the code runs."
         },
         {
-          "title": "When to Use Each",
-          "content": "Use PWA for content-heavy apps that can tolerate limited offline functionality. Use Offline-First for data-critical apps, collaboration tools, or apps used in unreliable network conditions where full offline capability is essential."
+          "title": "Maintainability Issues",
+          "content": "Code becomes harder to understand, refactor, and maintain without type information."
+        }
+      ],
+      "pointers": [
+        "`any` disables all type checking",
+        "Can lead to unexpected runtime errors",
+        "Makes code harder to maintain and refactor",
+        "Defeats the purpose of using TypeScript"
+      ],
+      "blocks": [
+        {
+          "title": "Key Takeaway",
+          "content": "`any` trades short-term convenience for long-term chaos. It's a quick fix that creates technical debt."
         }
       ]
-    },
+    }
+  },
 
-    "offlineFirstExamples": {
-      "id": "offlineFirstExamples",
-      "title": "Offline Apps in Action",
+  "whereAnyCreepsIn": {
+    "id": "whereAnyCreepsIn",
+    "title": "Where `any` Creeps In",
       "horizandalSubSlides": [
         {
-          "title": "WhatsApp Web",
-          "image": "https://images.hindustantimes.com/tech/img/2021/08/25/1600x900/background-5234461_1920_1628680367499_1629866749478.png",
+        "title": "Quiz 2: Spot the Culprit",
+        "code": "// Which line infects the types?\n\nfunction fetchUser(id: number) {\n  return fetch(`/api/users/${id}`)\n    .then(r => r.json()); // Line 1: returns any\n}\n\nfunction processUser(user: any) { // Line 2: accepts any\n  return user.name.toUpperCase();\n}\n\nconst data = JSON.parse('{}'); // Line 3: returns any\nprocessUser(data); // Infection spreads!",
+        "language": "typescript",
+        "list": [
+          {
+            "title": "The Infection Point",
+            "content": "Once `any` enters your codebase, it spreads through function parameters, return types, and variable assignments."
+          },
+          {
+            "title": "Silent Propagation",
+            "content": "Functions that accept `any` pass it along, infecting all code that uses those functions."
+          },
+          {
+            "title": "The Domino Effect",
+            "content": "One `any` can contaminate an entire module or even the entire application."
+          }
+        ]
+      },
+      {
+        "title": "Common Sources: JSON Parsing",
+        "code": "// JSON.parse returns any\nconst data = JSON.parse('{}');\n// data is now 'any'\n\nfunction getName(data: any) {\n  return data.name; // No type checking!\n}\n\n// Better: Type it\ninterface User {\n  name: string;\n  email: string;\n}\n\nconst user: User = JSON.parse('{}');",
+        "language": "typescript",
           "list": [
             {
-              "title": "Offline Experience",
-              "content": "View limited chat history stored locally. Recent conversations remain accessible even without internet connection."
+            "title": "JSON.parse()",
+            "content": "Returns `any` by default, forcing you to type the result manually."
             },
             {
-              "title": "Send Messages Offline",
-              "content": "Compose and send messages while offline. Messages are queued locally and automatically sent when connection is restored."
+            "title": "API Responses",
+            "content": "Fetch responses are often typed as `any` unless you explicitly type them."
             },
             {
-              "title": "Seamless Sync",
-              "content": "Once online, queued messages are sent automatically and new messages are synced in the background without interrupting your workflow."
+            "title": "Local Storage",
+            "content": "Reading from localStorage returns `any`, requiring manual type assertions."
             }
           ]
         },
         {
-          "title": "Google Docs",
-          "image": "https://media.licdn.com/dms/image/v2/D4D12AQHVMcx-ckRzTQ/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1693712101604?e=2147483647&v=beta&t=x2x4Klr6G4MotvdA5Vknr0huNRVJi0dNJ4ojugImG-Q",
+        "title": "Common Sources: Third-party Libraries",
+        "code": "// Library without types\nimport { lib } from 'untyped-lib';\n\n// Forced to use any\nconst result: any = lib.doSomething();\n\n// Better: Create types\ninterface Result {\n  data: string;\n  status: number;\n}\n\nconst result: Result = lib.doSomething();\n\n// Or: npm install @types/untyped-lib",
+        "language": "typescript",
           "list": [
             {
-              "title": "Offline Experience",
-              "content": "View and edit documents completely offline. All changes are saved locally and synced automatically when you reconnect."
-            },
-            {
-              "title": "Background Sync",
-              "content": "Changes made offline are queued and synchronized in the background, ensuring no data loss even with intermittent connectivity."
+            "title": "Missing Type Definitions",
+            "content": "Libraries without `@types` packages force you to use `any` or create your own types."
+          },
+          {
+            "title": "Poor Type Definitions",
+            "content": "Some libraries have incomplete or incorrect type definitions, leading to `any` usage."
+          },
+          {
+            "title": "Legacy Libraries",
+            "content": "Older JavaScript libraries may not have TypeScript support, requiring workarounds."
             }
           ]
         },
         {
-          "title": "Notion",
-          "image": "https://ceblog.s3.amazonaws.com/wp-content/uploads/2023/05/18140417/notion-brand-logo.png",
+        "title": "Common Sources: Legacy Code",
+        "code": "// Migrating from JavaScript\nfunction oldFunc(param) { // Implicit any\n  return param.value * 2;\n}\n\n// Temporary fix\nfunction oldFunc(param: any) {\n  return param.value * 2;\n}\n\n// Better: Add types\ninterface Param {\n  value: number;\n}\n\nfunction oldFunc(param: Param) {\n  return param.value * 2;\n}",
+        "language": "typescript",
           "list": [
             {
-              "title": "Offline Experience",
-              "content": "Access and edit your workspace offline. All pages and content you've viewed are cached locally for offline access."
+            "title": "Gradual Migration",
+            "content": "When migrating JavaScript to TypeScript, `any` is often used as a temporary measure."
             },
             {
-              "title": "Full Functionality",
-              "content": "Create new pages, edit existing content, and organize your workspace even without internet. All changes are saved locally first."
+            "title": "Implicit Any",
+            "content": "Functions without type annotations get implicit `any` parameters (unless `noImplicitAny` is enabled)."
             },
             {
-              "title": "Automatic Sync",
-              "content": "When connection is restored, all offline changes sync automatically, keeping your workspace up-to-date across all devices."
-            }
-          ]
-        }
-      ]
-    },
-
-    "coreConcepts": {
-      "id": "coreConcepts",
-      "title": "Core Concepts",
-      "horizandalSubSlides": [
-        {
-          "title": "Caching",
-          "list": [
-            {
-              "title": "Service Worker Caching",
-              "content": "Service Workers cache network requests and serve them offline. Use Cache API to store static assets, API responses, and dynamic content for offline access."
-            },
-            {
-              "title": "Cache Strategies",
-              "content": "Implement cache-first, network-first, or stale-while-revalidate strategies. Choose based on data freshness requirements and offline priority."
-            },
-            {
-              "title": "Cache Management",
-              "content": "Manage cache size, expiration, and versioning. Clean up old caches and update cached content when new versions are available."
-            }
-          ]
-        },
-        {
-          "title": "Local Database",
-          "list": [
-            {
-              "title": "IndexedDB Storage",
-              "content": "IndexedDB provides large-scale client-side storage for structured data. Store user data, application state, and cached content that persists across sessions."
-            },
-            {
-              "title": "LocalStorage & SessionStorage",
-              "content": "Use localStorage for persistent key-value data and sessionStorage for temporary data. Ideal for user preferences, settings, and small data sets."
-            },
-            {
-              "title": "Data Persistence",
-              "content": "Ensure data persists across browser sessions and app restarts. Implement data migration strategies when schema changes are needed."
-            }
-          ]
-        },
-        {
-          "title": "Offline/Online Detection",
-          "list": [
-            {
-              "title": "Online/Offline Events",
-              "content": "Listen to navigator.onLine and online/offline events to detect network status changes. React to connectivity changes in real-time to adjust app behavior."
-            },
-            {
-              "title": "Network Information API",
-              "content": "Use Network Information API to detect connection type, bandwidth, and quality. Optimize data usage based on connection capabilities."
-            },
-            {
-              "title": "Heartbeat Checks",
-              "content": "Implement periodic network checks by pinging a server endpoint. Detect intermittent connectivity and handle connection failures gracefully."
-            }
-          ]
-        },
-        {
-          "title": "Synchronization",
-          "list": [
-            {
-              "title": "Background Sync",
-              "content": "Use Background Sync API to queue actions when offline and execute them when connection is restored. Perfect for sending messages and syncing data."
-            },
-            {
-              "title": "Conflict Resolution",
-              "content": "Handle conflicts when offline changes conflict with server data. Implement strategies like last-write-wins, merge algorithms, or user intervention."
-            },
-            {
-              "title": "Optimistic Updates",
-              "content": "Update UI immediately when user performs actions, then sync with server. Rollback changes if sync fails, providing instant feedback."
+            "title": "Technical Debt",
+            "content": "Temporary `any` usage often becomes permanent if not refactored."
             }
           ]
         }
       ]
     },
 
-    "demoWithoutOffline": {
-      "id": "demoWithoutOffline",
-      "title": "Demo - App without offline support",
-      "copy": "See how an app behaves without offline capabilities.",
-      "link": "/demo-1",
-      "linkText": "Demo app"
-    },
+  "escapeRoutes": {
+    "id": "escapeRoutes",
+    "title": "Quiz 3: Which fix restores type safety?",
+    "code": "// Original (broken)\nfunction processData(data: any) {\n  return data.value + 10;\n}\n\n// Option 1: Use unknown\nfunction processData(data: unknown) {\n  if (typeof data === 'object' && data !== null && 'value' in data) {\n    return (data as { value: number }).value + 10;\n  }\n  throw new Error('Invalid');\n}\n\n// Option 2: Use generics\nfunction processData<T extends { value: number }>(data: T) {\n  return data.value + 10;\n}\n\n// Option 3: Use type guards\nfunction hasValue(obj: unknown): obj is { value: number } {\n  return typeof obj === 'object' && obj !== null && 'value' in obj;\n}\n\nfunction processData(data: unknown) {\n  if (hasValue(data)) {\n    return data.value + 10; // TypeScript knows!\n  }\n  throw new Error('Invalid');\n}",
+    "language": "typescript",
+    "theory": {
+      "heading": "Escape Routes: Avoiding `any`",
+      "subHeading": "Step-by-Step Refactoring",
+      "copy": "There are several strategies to avoid `any` while maintaining flexibility. Let's explore the most effective approaches.",
+      "list": [
+        {
+          "title": "Use `unknown` Instead",
+          "content": "`unknown` is type-safe `any`. You must check the type before using it, forcing you to handle all cases."
+        },
+        {
+          "title": "Type Guards",
+          "content": "Create functions that narrow types, allowing TypeScript to understand what type you're working with."
+        },
+        {
+          "title": "Generics",
+          "content": "Use generics to create flexible functions that maintain type safety without using `any`."
+        },
+        {
+          "title": "Proper Typing",
+          "content": "Define interfaces and types for your data structures, even for dynamic content like API responses."
+        }
+      ],
+      "pointers": [
+        "`unknown` requires type checking before use",
+        "Type guards help TypeScript understand types",
+        "Generics provide flexibility with type safety",
+        "Always prefer explicit types over `any`"
+      ],
+      "blocks": [
+        {
+          "title": "TypeScript Compiler Options",
+          "content": "Enable `noImplicitAny` and `strict` mode to catch `any` usage early and enforce better type safety."
+        }
+      ]
+    }
+  },
 
-    "technicalStack": {
-      "id": "technicalStack",
-      "title": "Technical Stack",
-      "horizandalSubSlides": [
-        {
-          "title": "Service Workers",
-          "code": "// Register Service Worker\nif ('serviceWorker' in navigator) {\n  navigator.serviceWorker.register('/sw.js')\n    .then(registration => {\n      console.log('SW registered');\n    });\n}\n\n// Cache API\nself.addEventListener('fetch', event => {\n  event.respondWith(\n    caches.match(event.request)\n      .then(response => response || fetch(event.request))\n  );\n});",
-          "language": "javascript",
+  "compilerOptions": {
+    "id": "compilerOptions",
+    "title": "TypeScript Compiler Options",
+    "horizandalSubSlides": [
+      {
+        "title": "tsconfig.json Settings",
+        "code": "{\n  \"compilerOptions\": {\n    \"strict\": true,        // Enables all strict checks\n    \"noImplicitAny\": true  // Error on implicit any\n  }\n}",
+        "language": "json",
           "list": [
             {
-              "title": "What is Service Worker?",
-              "content": "A JavaScript file that runs in the background, intercepting network requests and enabling offline functionality."
+            "title": "strict Mode",
+            "content": "Enables all strict type checking options, including `noImplicitAny`."
             },
             {
-              "title": "Cache API",
-              "content": "Service Workers use the Cache API to store network requests and serve them offline, enabling offline-first functionality."
+            "title": "noImplicitAny",
+            "content": "Raises errors on expressions and declarations with an implied `any` type."
             },
             {
-              "title": "Background Sync",
-              "content": "Service Workers can queue actions when offline and execute them when connection is restored using Background Sync API."
+            "title": "Gradual Adoption",
+            "content": "Enable these options gradually in existing projects to avoid breaking everything at once."
             }
           ]
         },
         {
-          "title": "IndexedDB",
-          "code": "// Open IndexedDB database\nconst request = indexedDB.open('NotesDB', 1);\n\nrequest.onupgradeneeded = (event) => {\n  const db = event.target.result;\n  const objectStore = db.createObjectStore('notes', {\n    keyPath: 'id',\n    autoIncrement: true\n  });\n};\n\n// Add note\nconst addNote = (note) => {\n  const transaction = db.transaction(['notes'], 'readwrite');\n  const objectStore = transaction.objectStore('notes');\n  return objectStore.add(note);\n};\n\n// Get all notes\nconst getAllNotes = () => {\n  const transaction = db.transaction(['notes'], 'readonly');\n  const objectStore = transaction.objectStore('notes');\n  return objectStore.getAll();\n};",
-          "language": "javascript",
+        "title": "Practical Example: Refactoring",
+        "code": "// Before: Using any\nfunction parseUser(json: string): any {\n  return JSON.parse(json);\n}\n\n// After: Using unknown and type guards\ninterface User {\n  name: string;\n  email: string;\n  age: number;\n}\n\nfunction isUser(obj: unknown): obj is User {\n  return (\n    typeof obj === 'object' &&\n    obj !== null &&\n    'name' in obj && 'email' in obj && 'age' in obj\n  );\n}\n\nfunction parseUser(json: string): User {\n  const parsed = JSON.parse(json);\n  if (isUser(parsed)) return parsed;\n  throw new Error('Invalid');\n}",
+        "language": "typescript",
           "list": [
             {
-              "title": "What is IndexedDB?",
-              "content": "A low-level API for client-side storage of large amounts of structured data, including files and blobs."
+            "title": "Type Safety",
+            "content": "The refactored version ensures type safety while handling dynamic JSON data."
             },
             {
-              "title": "Why Use IndexedDB?",
-              "content": "IndexedDB provides large-scale storage for structured data, perfect for storing user data, application state, and cached content."
+            "title": "Runtime Validation",
+            "content": "Type guards validate data at runtime, catching invalid data early."
             },
             {
-              "title": "Offline Data Storage",
-              "content": "IndexedDB persists data across browser sessions, making it ideal for offline-first applications that need to store data locally."
-            }
-          ]
-        },
-        {
-          "title": "Network Detection & Sync",
-          "code": "// Detect online/offline status\nconst [isOnline, setIsOnline] = useState(navigator.onLine);\n\nuseEffect(() => {\n  const handleOnline = () => setIsOnline(true);\n  const handleOffline = () => setIsOnline(false);\n  \n  window.addEventListener('online', handleOnline);\n  window.addEventListener('offline', handleOffline);\n  \n  return () => {\n    window.removeEventListener('online', handleOnline);\n    window.removeEventListener('offline', handleOffline);\n  };\n}, []);\n\n// Sync when online\nuseEffect(() => {\n  if (isOnline) {\n    syncPendingChanges();\n  }\n}, [isOnline]);\n\n// Queue changes when offline\nconst saveNote = async (note) => {\n  await saveToIndexedDB(note);\n  if (!isOnline) {\n    queueForSync('add', note);\n  } else {\n    syncToServer(note);\n  }\n};",
-          "language": "javascript",
-          "list": [
-            {
-              "title": "Online/Offline Detection",
-              "content": "Listen to browser online/offline events to detect network status changes and adjust app behavior accordingly."
-            },
-            {
-              "title": "Automatic Sync",
-              "content": "When connection is restored, automatically sync pending changes from local storage to the server."
-            },
-            {
-              "title": "Queue Management",
-              "content": "Queue user actions when offline and execute them when online, ensuring no data loss during offline periods."
-            }
-          ]
-        },
-        {
-          "title": "React Hooks",
-          "code": "// Custom hook for offline-first notes\nconst useNotes = () => {\n  const [notes, setNotes] = useState([]);\n  const [isOnline, setIsOnline] = useState(navigator.onLine);\n\n  useEffect(() => {\n    // Load from IndexedDB first\n    loadFromIndexedDB().then(setNotes);\n    \n    // Then sync with server if online\n    if (isOnline) {\n      syncWithServer();\n    }\n  }, [isOnline]);\n\n  const addNote = async (note) => {\n    // Save to IndexedDB immediately\n    await saveToIndexedDB(note);\n    setNotes(prev => [...prev, note]);\n    \n    // Queue for sync if offline\n    if (!isOnline) {\n      queueForSync('add', note);\n    }\n  };\n\n  return { notes, addNote };\n};",
-          "language": "javascript",
-          "list": [
-            {
-              "title": "State Management",
-              "content": "Use React hooks like useState and useEffect to manage application state and handle offline/online transitions."
-            },
-            {
-              "title": "Custom Hooks",
-              "content": "Create custom hooks to encapsulate offline-first logic, making it reusable across components and easier to maintain."
-            },
-            {
-              "title": "Optimistic Updates",
-              "content": "Update UI immediately when user performs actions, then sync with server in the background for better user experience."
+            "title": "Better Developer Experience",
+            "content": "Autocomplete and type checking work correctly with properly typed functions."
             }
           ]
         }
       ]
     },
 
-    "usefulLibraries": {
-      "id": "usefulLibraries",
-      "title": "Useful Libraries",
-      "horizandalSubSlides": [
+  "finalBossNever": {
+    "id": "finalBossNever",
+    "title": "Quiz 4: What type does this evaluate to?",
+    "code": "// Example 1: Exhaustive switch\nfunction handleStatus(status: 'loading' | 'success' | 'error') {\n  switch (status) {\n    case 'loading': return 'Loading...';\n    case 'success': return 'Done!';\n    case 'error': return 'Failed!';\n    default:\n      const exhaustive: never = status; // never!\n      return exhaustive;\n  }\n}\n\n// Example 2: Union narrowing\nfunction process(value: string | number | boolean) {\n  if (typeof value === 'string') return value.toUpperCase();\n  if (typeof value === 'number') return value * 2;\n  if (typeof value === 'boolean') return !value;\n  const impossible: never = value; // never!\n  return impossible;\n}\n\n// Example 3: Unreachable\nfunction throwError(): never {\n  throw new Error('Error');\n}",
+    "language": "typescript",
+    "theory": {
+      "heading": "The Final Boss: `never`",
+      "subHeading": "Perfect Type Safety",
+      "copy": "`never` represents values that should never occur. It's the opposite of `any` - the most restrictive type possible. When you see `never`, you've achieved perfect type safety.",
+      "list": [
         {
-          "title": "Workbox",
-          "content": "A set of libraries and Node modules that make it easy to cache assets and take full advantage of Service Workers. Simplifies Service Worker management and provides powerful caching strategies."
+          "title": "What is `never`?",
+          "content": "A type that represents values that never occur. Used for functions that never return, exhaustive checks, and impossible states."
         },
         {
-          "title": "Dexie.js",
-          "content": "A wrapper library for IndexedDB that provides a cleaner, promise-based API. Makes IndexedDB operations simpler and more intuitive for React developers."
+          "title": "Exhaustive Checks",
+          "content": "In switch statements, `never` appears in the default case when all cases are handled, ensuring completeness."
         },
         {
-          "title": "React Query / SWR",
-          "content": "Data fetching libraries with built-in offline support. Automatically cache data, handle background updates, and sync when connection is restored."
+          "title": "Unreachable Code",
+          "content": "Functions that throw errors or never return are typed as `never`, preventing their use in invalid contexts."
         },
         {
-          "title": "PouchDB / RxDB",
-          "content": "Local-first databases that sync with remote databases. PouchDB syncs with CouchDB, while RxDB provides real-time sync capabilities for offline-first React apps."
+          "title": "Type Narrowing",
+          "content": "After narrowing all possible types, remaining code sees `never`, indicating an impossible state."
+        }
+      ],
+      "pointers": [
+        "`never` is the most restrictive type",
+        "Appears in exhaustive checks and unreachable code",
+        "Indicates perfect type safety",
+        "The goal: refactor until `never` appears in impossible states"
+      ],
+      "blocks": [
+        {
+          "title": "The Journey",
+          "content": "From `any` (no safety) → `unknown` (safe but requires checks) → proper types → `never` (perfect safety). When `never` appears in unreachable code, you've achieved type safety perfection."
         }
       ]
-    },
+    }
+  },
 
-    "theCatch": {
-      "id": "theCatch",
-      "title": "Okay.. What's the catch?",
-      "horizandalSubSlides": [
+  "liveCodeChallenge": {
+    "id": "liveCodeChallenge",
+    "title": "Live-Code Challenge",
+    "code": "// Starting: any-ridden\nfunction processApi(response: any) {\n  if (response.status === 'success') {\n    return response.data.map((item: any) => item.name);\n  }\n  return [];\n}\n\n// Refactored: any → never\ninterface ApiResponse<T> {\n  status: 'success' | 'error';\n  data?: T[];\n}\n\ninterface Item {\n  name: string;\n  id: number;\n}\n\nfunction isApiResponse<T>(obj: unknown): obj is ApiResponse<T> {\n  return typeof obj === 'object' && obj !== null && 'status' in obj;\n}\n\nfunction processApi(response: unknown): string[] {\n  if (!isApiResponse<Item>(response)) throw new Error('Invalid');\n  \n  if (response.status === 'success') {\n    return (response.data || []).map(item => item.name);\n  }\n  \n  const exhaustive: never = response.status; // never!\n  return [];\n}",
+    "language": "typescript",
+    "theory": {
+      "heading": "Refactoring Challenge",
+      "subHeading": "From `any` to `never`",
+      "copy": "Let's refactor a real-world example, step by step, until we achieve perfect type safety with `never` appearing in unreachable states.",
+      "list": [
         {
-          "title": "Challenges of Offline-First",
+          "title": "Step 1: Identify `any` Usage",
+          "content": "Find all instances of `any` in the code and understand why they exist."
+        },
+        {
+          "title": "Step 2: Replace with `unknown`",
+          "content": "Replace `any` with `unknown` to force type checking."
+        },
+        {
+          "title": "Step 3: Add Type Guards",
+          "content": "Create type guard functions to narrow types safely."
+        },
+        {
+          "title": "Step 4: Define Interfaces",
+          "content": "Create proper interfaces for your data structures."
+        },
+        {
+          "title": "Step 5: Achieve Exhaustiveness",
+          "content": "Ensure all cases are handled, making `never` appear in impossible states."
+        }
+      ],
+      "pointers": [
+        "Start with `unknown` instead of `any`",
+        "Use type guards to narrow types",
+        "Define interfaces for all data structures",
+        "Aim for exhaustive checks where `never` appears"
+      ]
+    }
+  },
+
+  "wrapUp": {
+    "id": "wrapUp",
+    "title": "Wrap-up & Key Takeaways",
+    "horizandalSubSlides": [
+      {
+        "title": "The Journey: `any` → `never`",
           "list": [
             {
-              "title": "Complexity",
-              "content": "Building offline-first apps requires handling caching, sync, conflict resolution, and state management, adding complexity to the codebase."
+            "title": "Start: `any`",
+            "content": "No type safety, runtime errors, technical debt."
+          },
+          {
+            "title": "Step 1: `unknown`",
+            "content": "Type-safe alternative to `any`, forces type checking."
+          },
+          {
+            "title": "Step 2: Proper Types",
+            "content": "Define interfaces, use generics, create type guards."
+          },
+          {
+            "title": "Step 3: Strict Mode",
+            "content": "Enable TypeScript strict mode and `noImplicitAny`."
+          },
+          {
+            "title": "Goal: `never`",
+            "content": "Perfect type safety - `never` appears in unreachable code."
+            }
+          ]
+        },
+        {
+        "title": "Key Takeaways",
+          "list": [
+            {
+            "title": "Avoid `any`",
+            "content": "Use `unknown` when types are truly unknown, then narrow with type guards."
+          },
+          {
+            "title": "Enable Strict Mode",
+            "content": "Turn on `strict` and `noImplicitAny` to catch issues early."
+          },
+          {
+            "title": "Create Type Guards",
+            "content": "Build functions that help TypeScript understand your types."
+          },
+          {
+            "title": "Define Interfaces",
+            "content": "Even for dynamic data, create proper type definitions."
+          },
+          {
+            "title": "Aim for `never`",
+            "content": "When `never` appears in unreachable code, you've achieved type safety perfection."
+          }
+        ]
+      },
+      {
+        "title": "Resources & Next Steps",
+          "list": [
+            {
+            "title": "TypeScript Handbook",
+            "content": "Official TypeScript documentation on types and type narrowing."
             },
             {
-              "title": "Storage Limits",
-              "content": "Browser storage has limits. IndexedDB typically allows 50% of disk space, but you need to manage storage quotas and cleanup strategies."
+            "title": "Type Guards",
+            "content": "Learn about user-defined type guards and narrowing techniques."
             },
             {
-              "title": "Conflict Resolution",
-              "content": "When offline changes conflict with server data, you need robust strategies like last-write-wins, merge algorithms, or user intervention."
+            "title": "Strict Mode",
+            "content": "Understand all TypeScript compiler options for maximum type safety."
             },
             {
-              "title": "Testing Challenges",
-              "content": "Testing offline scenarios requires simulating network failures, slow connections, and sync conflicts, making testing more complex."
+            "title": "Practice",
+            "content": "Refactor your own codebase, replacing `any` with proper types."
             }
           ]
         }
       ]
     },
-
-
-    "demoWithOffline": {
-      "id": "demoWithOffline",
-      "title": "Demo - App with offline capabilities",
-      "copy": "Let's see how an offline-first app will behave",
-      "link": "/demo-2",
-      "linkText": "Demo app"
-    },
-  
 
     "thank": {
       "title": "Thanks & QA ?",
