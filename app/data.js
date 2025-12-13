@@ -344,6 +344,37 @@ export default {
             "content": "Manageable migration, reduces risk, can track progress systematically."
           }
         ]
+      },
+      {
+        "title": "Strategy 6: Using Type Libraries",
+        "code": "import React, { FC, ReactNode, ChangeEvent } from 'react';\n\n// FC - FunctionComponent type\nconst MyComponent: FC<{ name: string }> = ({ name }) => {\n  return <div>{name}</div>;\n};\n\n// ReactNode - anything renderable\nconst Container: FC<{ children: ReactNode }> = ({ children }) => {\n  return <div>{children}</div>;\n};\n\n// Event types - properly typed event handlers\nfunction MyRadio(e: ChangeEvent<HTMLInputElement>) {\n  console.log(e.target.checked); // Fully typed!\n}\n\n// useState setter type\nconst [count, setCount] = useState<number>(0);\n// setCount is Dispatch<SetStateAction<number>>",
+        "language": "typescript",
+        "list": [
+          {
+            "title": "FC (FunctionComponent)",
+            "content": "Type for a component that receives props and returns JSX."
+          },
+          {
+            "title": "ReactNode",
+            "content": "Anything that can be rendered: string, number, JSX, fragments, arrays."
+          },
+          {
+            "title": "JSX.Element & ReactElement",
+            "content": "Types for component output - JSX.Element is the output, ReactElement has props and type info."
+          },
+          {
+            "title": "Dispatch<SetStateAction>",
+            "content": "The type of a state setter from useState - properly typed state updates."
+          },
+          {
+            "title": "Event Types",
+            "content": "ChangeEvent, MouseEvent, KeyboardEvent - properly typed DOM events with element types."
+          },
+          {
+            "title": "DOM Element Types",
+            "content": "HTMLInputElement, HTMLTextAreaElement, HTMLButtonElement - use with events for full type safety."
+          }
+        ]
       }
     ]
   },
