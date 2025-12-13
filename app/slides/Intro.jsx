@@ -30,7 +30,7 @@ function Intro({ data }) {
             sequence={[
               "Jagadeesh",
               2000,
-              "React Bangalore ",
+              "TypedCoders Chennai",
               2000,
               "Functionals.ai",
               2000,
