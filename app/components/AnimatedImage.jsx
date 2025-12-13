@@ -3,9 +3,8 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const data = [
-  { key: "D", path: "/images/don.gif", alt: "don", width: "700px" },
-  { key: "V", path: "/images/vanakkan.png", alt: "vc", width: "700px" },
-  { key: "S", path: "/images/scooby.jpg", alt: "vc", width: "700px" },
+  { key: "S", path: "/images/summer.gif", alt: "summer", width: "1000px" },
+  { key: "C", path: "/images/c.png", alt: "chinrasu", width: "1000px" },
 
 ];
 

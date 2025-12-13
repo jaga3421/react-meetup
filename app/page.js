@@ -3,7 +3,6 @@ import Intro from './slides/Intro';
 import SingleList from './slides/SingleList';
 import HorizandalLarge from './slides/HorizandalLarge';
 import Thanks from './slides/Thanks';
-import InteractiveCodeSlide from './slides/InteractiveCodeSlide';
 import TimerComponent from './components/TimerComponent';
 import RBLogo from './components/RBLogo';
 import AnimatedImage from './components/AnimatedImage';
@@ -17,29 +16,26 @@ export default function Page() {
       <Intro data={data.intro} />
       <SingleList data={data.agenda} />
 
-      {/* What is any? */}
-      <HorizandalLarge data={data.whatIsAny} />
+      {/* Basic TypeScript Operators */}
+      <HorizandalLarge data={data.basicOperators} />
 
-      {/* The Problems with any - Interactive Quiz */}
-      <InteractiveCodeSlide data={data.problemsWithAny} />
+      {/* Tricky TypeScript Operators (unknown, never, any) */}
+      <HorizandalLarge data={data.trickyOperators} />
 
-      {/* Where any Creeps In */}
-      <HorizandalLarge data={data.whereAnyCreepsIn} />
+      {/* When any is Used */}
+      <SingleList data={data.whenAnyIsUsed} />
 
-      {/* Escape Routes: Avoiding any - Interactive Refactoring */}
-      <InteractiveCodeSlide data={data.escapeRoutes} />
+      {/* Why any Creeps Up */}
+      <SingleList data={data.whyAnyCreepsUp} />
 
-      {/* TypeScript Compiler Options */}
-      <HorizandalLarge data={data.compilerOptions} />
+      {/* Problems with any */}
+      <HorizandalLarge data={data.problemsWithAny} />
 
-      {/* The Final Boss: never - Interactive Quiz */}
-      <InteractiveCodeSlide data={data.finalBossNever} />
+      {/* How to Systematically Avoid/Remove any */}
+      <HorizandalLarge data={data.howToAvoidAny} />
 
-      {/* Live-Code Challenge */}
-      <InteractiveCodeSlide data={data.liveCodeChallenge} />
-
-      {/* Wrap-up & Key Takeaways */}
-      <HorizandalLarge data={data.wrapUp} />
+      {/* Practical Examples */}
+      <SingleList data={data.practicalExamples} />
 
       <Thanks data={data.thank} />
       <TimerComponent timer={30} />
