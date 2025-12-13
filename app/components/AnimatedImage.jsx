@@ -34,7 +34,7 @@ const AnimatedImage = () => {
 
   return (
     <>
-      {data.map(({ key, path, alt, width, caption }) => (
+      {data.map(({ key, path, alt, width }) => (
         <motion.div
           key={key}
           initial="hidden"
@@ -45,11 +45,6 @@ const AnimatedImage = () => {
           className="flex items-center justify-center w-full h-screen bg-black bg-opacity-80 z-[9999]"
         >
           <img src={path} alt={alt} style={{ width: width, height: "auto" }} />
-          {caption && (
-            <h2 className="text-2xl bg-pink-600 text-white p-2 text-center font-bold uppercase">
-              {caption}
-            </h2>
-          )}
         </motion.div>
       ))}
     </>
