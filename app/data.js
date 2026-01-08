@@ -27,7 +27,7 @@ export default {
       "Introduction",
       "Why useEffect Feels Necessary - Common Misconceptions",
       "React Mental Model - Render → Commit",
-      "Live Refactor Demo - From Messy to Clean",
+      "React 19: New Tools, Same Principles",
       "Pop Quiz"
     ]
   },
@@ -194,82 +194,41 @@ export default {
     ]
   },
 
-  "reactMentalModel1": {
-    "id": "reactMentalModel1",
+  "reactMentalModel": {
+    "id": "reactMentalModel",
     "title": "React Mental Model - Render → Commit",
     "horizandalSubSlides": [
       {
-        "title": "The Render Phase",
+        "title": "Render → Commit → Effects",
         "list": [
           {
-            "title": "What Happens",
-            "content": "React calls your component function and gets the JSX. This is pure computation - no side effects allowed"
+            "title": "Render Phase",
+            "content": "React calls your component, gets JSX. Pure computation - no side effects. Calculate derived values here."
           },
           {
-            "title": "The Rules",
-            "content": "During render, you can only read props/state and return JSX. No API calls, no DOM updates, no timers"
+            "title": "Commit Phase",
+            "content": "React updates the DOM. Browser paints the screen."
           },
           {
-            "title": "Why",
-            "content": "React needs to be able to call your component multiple times safely to find the minimal changes"
+            "title": "Effects Run",
+            "content": "useEffect runs AFTER commit. This is when side effects are safe: API calls, subscriptions, DOM manipulation"
           }
         ]
       },
-      {
-        "title": "The Commit Phase",
-        "list": [
-          {
-            "title": "What Happens",
-            "content": "React updates the DOM with the new JSX. This is when the browser actually paints the screen"
-          },
-          {
-            "title": "After Commit",
-            "content": "Now the DOM matches what you rendered. This is when side effects are safe to run"
-          },
-          {
-            "title": "useEffect Timing",
-            "content": "useEffect runs AFTER commit. This is why it's the right place for side effects like API calls, subscriptions, DOM manipulation"
-          }
-        ]
-      }
-    ]
-  },
-
-  "reactMentalModel2": {
-    "id": "reactMentalModel2",
-    "title": "Understanding the Flow",
-    "horizandalSubSlides": [
       {
         "title": "The Golden Rule",
         "list": [
           {
-            "title": "If it can be calculated in render...",
-            "content": "Do it during render. Derived state, filtered lists, computed values - all belong in the render phase"
+            "title": "Calculated in render?",
+            "content": "Do it during render. Derived state, filtered lists, computed values"
           },
           {
-            "title": "If it's a side effect...",
-            "content": "Put it in useEffect. Things that affect the outside world: API calls, subscriptions, timers, DOM updates"
+            "title": "Side effect?",
+            "content": "Put it in useEffect. API calls, subscriptions, timers, DOM updates"
           },
           {
-            "title": "If it's a user action...",
-            "content": "Handle it in event handlers. onClick, onChange, onSubmit - these are direct responses to user input"
-          }
-        ]
-      },
-      {
-        "title": "Why This Matters",
-        "list": [
-          {
-            "title": "Predictable Components",
-            "content": "When you follow this model, components become predictable. Render is pure, effects are explicit"
-          },
-          {
-            "title": "Better Performance",
-            "content": "React can optimize renders when they're pure. Unnecessary effects create extra work and re-renders"
-          },
-          {
-            "title": "Easier Debugging",
-            "content": "Clear separation: render logic vs side effects. You know where to look when something goes wrong"
+            "title": "User action?",
+            "content": "Handle in event handlers. onClick, onChange - direct responses to user input"
           }
         ]
       }
@@ -310,37 +269,40 @@ export default {
           }
         ]
       },
+    ]
+  },
+
+  "react19Features": {
+    "id": "react19Features",
+    "title": "React 19: New Tools, Same Principles",
+    "horizandalSubSlides": [
       {
-        "title": "Example 3: User Actions in Handlers",
-        "code": "function LoginForm() {\n  const [email, setEmail] = useState('');\n  const [password, setPassword] = useState('');\n\n  // ✅ User action handled directly\n  const handleSubmit = (e) => {\n    e.preventDefault();\n    // Direct response to user action\n    login(email, password);\n  };\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <input\n        value={email}\n        onChange={(e) => setEmail(e.target.value)}\n      />\n      <button type=\"submit\">Login</button>\n    </form>\n  );\n}",
+        "title": "The `use` Hook",
+        "code": "// Before: useEffect for async data\nfunction UserProfile({ userId }) {\n  const [user, setUser] = useState(null);\n  \n  useEffect(() => {\n    fetchUser(userId).then(setUser);\n  }, [userId]);\n  \n  if (!user) return <div>Loading...</div>;\n  return <div>{user.name}</div>;\n}\n\n// React 19: use hook for Promises\nfunction UserProfile({ userId }) {\n  const user = use(fetchUser(userId));\n  // Suspense handles loading automatically\n  return <div>{user.name}</div>;\n}",
         "language": "javascript",
         "list": [
           {
-            "title": "What's Happening",
-            "content": "Form submission handled in event handler - direct response to user action"
+            "title": "What It Does",
+            "content": "Reads Promises directly in render, works with Suspense for loading states"
           },
           {
-            "title": "Why This Works",
-            "content": "User actions should trigger handlers immediately, not wait for render + effect cycle"
+            "title": "Impact on useEffect",
+            "content": "Can replace useEffect for data fetching - cleaner, works with Suspense boundaries"
           }
         ]
       },
       {
-        "title": "Example 4: Combining Patterns",
-        "code": "function ShoppingCart({ items }) {\n  // ✅ Render: Calculate derived values\n  const total = items.reduce((sum, item) => sum + item.price, 0);\n  const itemCount = items.length;\n\n  // ✅ Effect: Side effect (analytics)\n  useEffect(() => {\n    trackEvent('cart_viewed', { itemCount, total });\n  }, [itemCount, total]);\n\n  // ✅ Handler: User action\n  const handleCheckout = () => {\n    processPayment(items);\n  };\n\n  return (\n    <div>\n      <p>{itemCount} items - ${total}</p>\n      <button onClick={handleCheckout}>Checkout</button>\n    </div>\n  );\n}",
+        "title": "Actions",
+        "code": "// Before: useEffect for form submission\nfunction LoginForm() {\n  const [status, setStatus] = useState('idle');\n  \n  const handleSubmit = async (e) => {\n    e.preventDefault();\n    setStatus('pending');\n    try {\n      await login(email, password);\n      setStatus('success');\n    } catch (error) {\n      setStatus('error');\n    }\n  };\n  \n  return <form onSubmit={handleSubmit}>...</form>;\n}\n\n// React 19: Actions simplify this\nfunction LoginForm() {\n  async function handleSubmit(formData) {\n    'use server';\n    await login(formData.get('email'), formData.get('password'));\n  }\n  \n  return <form action={handleSubmit}>...</form>;\n}",
         "language": "javascript",
         "list": [
           {
-            "title": "Render Phase",
-            "content": "total and itemCount calculated during render - pure computation"
+            "title": "What It Does",
+            "content": "Simplifies async form handling with automatic pending/error states"
           },
           {
-            "title": "Effect Phase",
-            "content": "Analytics tracking in useEffect - side effect that runs after commit"
-          },
-          {
-            "title": "Event Handler",
-            "content": "Checkout button handled directly - immediate response to user click"
+            "title": "Impact on useEffect",
+            "content": "Replaces useEffect patterns for form state management - cleaner, less boilerplate"
           }
         ]
       }
@@ -698,6 +660,12 @@ export default {
   "practicalExamples": {
     "id": "practicalExamples",
     "title": "Practical Examples",
+    "subtitles": []
+  },
+
+  "quiz": {
+    "id": "quiz",
+    "title": "Pop Quiz",
     "subtitles": []
   },
 

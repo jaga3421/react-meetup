@@ -26,11 +26,16 @@ export default function Page() {
       <HorizandalLarge data={data.whyUseEffectFeelsNecessary} />
 
       {/* React Mental Model - Render → Commit */}
-      <HorizandalLarge data={data.reactMentalModel1} />
-      <HorizandalLarge data={data.reactMentalModel2} />
+      <HorizandalLarge data={data.reactMentalModel} />
 
       {/* React Mental Model Examples */}
       <HorizandalLarge data={data.reactMentalModelExamples} />
+
+      {/* React 19: New Tools, Same Principles */}
+      <HorizandalLarge data={data.react19Features} />
+
+      {/* Pop Quiz */}
+      <SingleList data={data.quiz} />
 
       <Thanks data={data.thank} />
       <TimerComponent timer={25} />
