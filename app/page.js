@@ -34,6 +34,9 @@ export default function Page() {
       {/* React 19: New Tools, Same Principles */}
       <HorizandalLarge data={data.react19Features} />
 
+      {/* Summing Up */}
+      <SingleList data={data.summingUp} />
+
       {/* Pop Quiz */}
       <SingleList data={data.quiz} />
 

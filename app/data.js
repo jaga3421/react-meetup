@@ -108,19 +108,6 @@ export default {
             "content": "We're building amazing products here in Hyderabad, but how many of us have debugged a useEffect dependency nightmare at 2 AM? This talk is for that developer who's been there."
           }
         ]
-      },
-      {
-        "title": "Worth It? Absolutely!",
-        "list": [
-          {
-            "title": "The Impact",
-            "content": "Understanding useEffect properly means fewer bugs, better performance, and code that actually makes sense"
-          },
-          {
-            "title": "ReactHyderabad Deserves Better",
-            "content": "Our community is growing, and we should write code that doesn't make the next developer (or future you) question your life choices"
-          }
-        ]
       }
     ]
   },
@@ -661,6 +648,18 @@ export default {
     "id": "practicalExamples",
     "title": "Practical Examples",
     "subtitles": []
+  },
+
+  "summingUp": {
+    "id": "summingUp",
+    "title": "Summing Up",
+    "subtitles": [
+      "If it can be calculated in render, do it there",
+      "Side effects belong in useEffect",
+      "User actions go in event handlers",
+      "React 19 gives us better tools, but principles remain",
+      "Predictable components are happy components"
+    ]
   },
 
   "quiz": {
