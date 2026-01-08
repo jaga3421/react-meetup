@@ -1,6 +1,6 @@
 export default {
   "intro": {
-    "title": "From Any to Never: Escaping the Type Safety Black Hole",
+    "title": "use-effect vs Side-effects: Writing React code that doesn't fight you",
     "author": "Jagadeesh J, Founding Engineer, Functionals.ai",
     "social": [
       {
@@ -24,10 +24,326 @@ export default {
     "id": "agenda",
     "title": "Talk Agenda",
     "subtitles": [
-      "TypeScript Operators Overview",
-      "Problems with `any`",
-      "How to Systematically Remove `any`",
-      "Practical Examples"
+      "Introduction",
+      "Why useEffect Feels Necessary - Common Misconceptions",
+      "React Mental Model - Render → Commit",
+      "Live Refactor Demo - From Messy to Clean",
+      "Pop Quiz"
+    ]
+  },
+
+  "introAboutUseEffect": {
+    "id": "introAboutUseEffect",
+    "title": "What is useEffect?",
+    "horizandalSubSlides": [
+      {
+        "title": "The Hook We All Know",
+        "list": [
+          {
+            "title": "useEffect",
+            "content": "The most powerful and most misused hook in React"
+          },
+          {
+            "title": "What is it?",
+            "content": "A hook that lets you run code after React has updated the DOM"
+          },
+          {
+            "title": "When does it run?",
+            "content": "After every render by default, or when dependencies change"
+          }
+        ]
+      },
+      {
+        "title": "Why Does It Exist?",
+        "list": [
+          {
+            "title": "React's Rendering Model",
+            "content": "React components render JSX based on props and state. You can't do things like API calls or DOM updates while the component is rendering"
+          },
+          {
+            "title": "The Need",
+            "content": "Sometimes you need to do something after render: fetch data, update document title, set up subscriptions"
+          },
+          {
+            "title": "The Solution",
+            "content": "useEffect gives you a way to run code after the component has rendered and committed to the DOM"
+          }
+        ]
+      },
+      {
+        "title": "Simple Example",
+        "code": "function UserProfile({ userId }) {\n  const [user, setUser] = useState(null);\n\n  useEffect(() => {\n    // Runs after render\n    fetch(`/api/users/${userId}`)\n      .then(res => res.json())\n      .then(setUser);\n  }, [userId]); // Only re-runs if userId changes\n\n  return <div>{user?.name || 'Loading...'}</div>;\n}",
+        "language": "javascript",
+        "list": [
+          {
+            "title": "What's happening?",
+            "content": "After component renders, useEffect fetches user data"
+          },
+          {
+            "title": "Dependency array [userId]",
+            "content": "Effect only re-runs when userId changes, not on every render"
+          }
+        ]
+      }
+    ]
+  },
+
+  "whyThisTalk": {
+    "id": "whyThisTalk",
+    "title": "Why Talk About useEffect in 2026?",
+    "horizandalSubSlides": [
+      {
+        "title": "The Biryani Paradox",
+        "list": [
+          {
+            "title": "Everyone Knows It, But...",
+            "content": "Just like how every Hyderabadi knows biryani, every React dev knows useEffect. But do we really know it? Or are we just following the recipe without understanding the spices?"
+          },
+          {
+            "title": "The Recipe vs The Technique",
+            "content": "It's been around since Hooks (2018), but we're still writing code that fights React's mental model. Knowing the ingredients isn't the same as knowing when to add them."
+          },
+          {
+            "title": "The 2 AM Debugging Session",
+            "content": "We're building amazing products here in Hyderabad, but how many of us have debugged a useEffect dependency nightmare at 2 AM? This talk is for that developer who's been there."
+          }
+        ]
+      },
+      {
+        "title": "Worth It? Absolutely!",
+        "list": [
+          {
+            "title": "The Impact",
+            "content": "Understanding useEffect properly means fewer bugs, better performance, and code that actually makes sense"
+          },
+          {
+            "title": "ReactHyderabad Deserves Better",
+            "content": "Our community is growing, and we should write code that doesn't make the next developer (or future you) question your life choices"
+          }
+        ]
+      }
+    ]
+  },
+
+  "whyUseEffectFeelsNecessary": {
+    "id": "whyUseEffectFeelsNecessary",
+    "title": "Why useEffect Feels Necessary",
+    "horizandalSubSlides": [
+      {
+        "title": "Misconception 1: Derived State",
+        "code": "function UserCard({ firstName, lastName }) {\n  const [fullName, setFullName] = useState('');\n\n  // Issue: Extra render cycle - component renders, then effect runs,\n  // then setState triggers another render. Unnecessary state sync.\n  useEffect(() => {\n    setFullName(`${firstName} ${lastName}`);\n  }, [firstName, lastName]);\n\n  return <div>{fullName}</div>;\n}",
+        "language": "javascript",
+        "list": [
+          {
+            "title": "Why It Feels Necessary",
+            "content": "We think 'if it changes, it needs useState' - but derived values don't need state"
+          },
+          {
+            "title": "The Problem",
+            "content": "Unnecessary state + useEffect sync when value can be computed directly"
+          }
+        ]
+      },
+      {
+        "title": "Misconception 2: Event Handling",
+        "code": "function SearchBox() {\n  const [query, setQuery] = useState('');\n  const [results, setResults] = useState([]);\n\n  // Issue: User types → setQuery → render → effect runs → fetch\n  // Extra render cycle, delayed response. User action should trigger\n  // handler directly, not wait for render + effect cycle.\n  useEffect(() => {\n    if (query) {\n      fetchResults(query).then(setResults);\n    }\n  }, [query]);\n\n  return <input onChange={(e) => setQuery(e.target.value)} />;\n}",
+        "language": "javascript",
+        "list": [
+          {
+            "title": "Why It Feels Necessary",
+            "content": "We want to fetch on input change, and useEffect 'reacts' to state changes"
+          },
+          {
+            "title": "The Problem",
+            "content": "useEffect runs after render, creating unnecessary re-renders for user actions"
+          }
+        ]
+      },
+      {
+        "title": "Misconception 3: Orchestrating Logic",
+        "code": "function UserDashboard({ userId }) {\n  const [user, setUser] = useState(null);\n  const [posts, setPosts] = useState([]);\n\n  // Issue: Waterfall requests - must wait for user before fetching posts\n  // Multiple renders, unclear dependency chain, harder to reason about\n  useEffect(() => {\n    fetchUser(userId).then(setUser);\n  }, [userId]);\n\n  // Issue: Second effect depends on first, creating sequential flow\n  // If user changes, both effects re-run unnecessarily\n  useEffect(() => {\n    if (user) {\n      fetchPosts(user.id).then(setPosts);\n    }\n  }, [user]);\n\n  return <div>...</div>;\n}",
+        "language": "javascript",
+        "list": [
+          {
+            "title": "Why It Feels Necessary",
+            "content": "We need user before posts, so separate effects seem logical"
+          },
+          {
+            "title": "The Problem",
+            "content": "Multiple effects create waterfall requests and make dependencies unclear"
+          }
+        ]
+      },
+      {
+        "title": "The Common Thread",
+        "list": [
+          {
+            "title": "We Reach for useEffect Because...",
+            "content": "It feels like the 'React way' to handle anything that happens after render"
+          },
+          {
+            "title": "But React Has Better Patterns",
+            "content": "Derived state in render, events in handlers, data fetching with proper patterns"
+          },
+          {
+            "title": "The Result",
+            "content": "Code that works but is harder to reason about, debug, and maintain"
+          }
+        ]
+      }
+    ]
+  },
+
+  "reactMentalModel1": {
+    "id": "reactMentalModel1",
+    "title": "React Mental Model - Render → Commit",
+    "horizandalSubSlides": [
+      {
+        "title": "The Render Phase",
+        "list": [
+          {
+            "title": "What Happens",
+            "content": "React calls your component function and gets the JSX. This is pure computation - no side effects allowed"
+          },
+          {
+            "title": "The Rules",
+            "content": "During render, you can only read props/state and return JSX. No API calls, no DOM updates, no timers"
+          },
+          {
+            "title": "Why",
+            "content": "React needs to be able to call your component multiple times safely to find the minimal changes"
+          }
+        ]
+      },
+      {
+        "title": "The Commit Phase",
+        "list": [
+          {
+            "title": "What Happens",
+            "content": "React updates the DOM with the new JSX. This is when the browser actually paints the screen"
+          },
+          {
+            "title": "After Commit",
+            "content": "Now the DOM matches what you rendered. This is when side effects are safe to run"
+          },
+          {
+            "title": "useEffect Timing",
+            "content": "useEffect runs AFTER commit. This is why it's the right place for side effects like API calls, subscriptions, DOM manipulation"
+          }
+        ]
+      }
+    ]
+  },
+
+  "reactMentalModel2": {
+    "id": "reactMentalModel2",
+    "title": "Understanding the Flow",
+    "horizandalSubSlides": [
+      {
+        "title": "The Golden Rule",
+        "list": [
+          {
+            "title": "If it can be calculated in render...",
+            "content": "Do it during render. Derived state, filtered lists, computed values - all belong in the render phase"
+          },
+          {
+            "title": "If it's a side effect...",
+            "content": "Put it in useEffect. Things that affect the outside world: API calls, subscriptions, timers, DOM updates"
+          },
+          {
+            "title": "If it's a user action...",
+            "content": "Handle it in event handlers. onClick, onChange, onSubmit - these are direct responses to user input"
+          }
+        ]
+      },
+      {
+        "title": "Why This Matters",
+        "list": [
+          {
+            "title": "Predictable Components",
+            "content": "When you follow this model, components become predictable. Render is pure, effects are explicit"
+          },
+          {
+            "title": "Better Performance",
+            "content": "React can optimize renders when they're pure. Unnecessary effects create extra work and re-renders"
+          },
+          {
+            "title": "Easier Debugging",
+            "content": "Clear separation: render logic vs side effects. You know where to look when something goes wrong"
+          }
+        ]
+      }
+    ]
+  },
+
+  "reactMentalModelExamples": {
+    "id": "reactMentalModelExamples",
+    "title": "Examples: Putting It Together",
+    "horizandalSubSlides": [
+      {
+        "title": "Example 1: Derived State in Render",
+        "code": "function ProductList({ products, filter }) {\n  // ✅ Calculate during render - pure computation\n  const filteredProducts = products.filter(\n    p => p.category === filter\n  );\n  const totalPrice = filteredProducts.reduce(\n    (sum, p) => sum + p.price, 0\n  );\n\n  return (\n    <div>\n      <p>Found {filteredProducts.length} products</p>\n      <p>Total: ${totalPrice}</p>\n    </div>\n  );\n}",
+        "language": "javascript",
+        "list": [
+          {
+            "title": "What's Happening",
+            "content": "Filtering and calculating total happen during render - pure functions, no side effects"
+          },
+          {
+            "title": "Why This Works",
+            "content": "These values are derived from props. They recalculate automatically when props change"
+          }
+        ]
+      },
+      {
+        "title": "Example 2: Side Effects in useEffect",
+        "code": "function UserProfile({ userId }) {\n  const [user, setUser] = useState(null);\n\n  // ✅ Side effect belongs in useEffect\n  useEffect(() => {\n    // Runs after commit - safe to fetch\n    fetch(`/api/users/${userId}`)\n      .then(res => res.json())\n      .then(setUser);\n  }, [userId]);\n\n  if (!user) return <div>Loading...</div>;\n  return <div>{user.name}</div>;\n}",
+        "language": "javascript",
+        "list": [
+          {
+            "title": "What's Happening",
+            "content": "API call happens in useEffect - runs after component commits to DOM"
+          },
+          {
+            "title": "Why This Works",
+            "content": "Fetching is a side effect that affects outside world. useEffect is the right place"
+          }
+        ]
+      },
+      {
+        "title": "Example 3: User Actions in Handlers",
+        "code": "function LoginForm() {\n  const [email, setEmail] = useState('');\n  const [password, setPassword] = useState('');\n\n  // ✅ User action handled directly\n  const handleSubmit = (e) => {\n    e.preventDefault();\n    // Direct response to user action\n    login(email, password);\n  };\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <input\n        value={email}\n        onChange={(e) => setEmail(e.target.value)}\n      />\n      <button type=\"submit\">Login</button>\n    </form>\n  );\n}",
+        "language": "javascript",
+        "list": [
+          {
+            "title": "What's Happening",
+            "content": "Form submission handled in event handler - direct response to user action"
+          },
+          {
+            "title": "Why This Works",
+            "content": "User actions should trigger handlers immediately, not wait for render + effect cycle"
+          }
+        ]
+      },
+      {
+        "title": "Example 4: Combining Patterns",
+        "code": "function ShoppingCart({ items }) {\n  // ✅ Render: Calculate derived values\n  const total = items.reduce((sum, item) => sum + item.price, 0);\n  const itemCount = items.length;\n\n  // ✅ Effect: Side effect (analytics)\n  useEffect(() => {\n    trackEvent('cart_viewed', { itemCount, total });\n  }, [itemCount, total]);\n\n  // ✅ Handler: User action\n  const handleCheckout = () => {\n    processPayment(items);\n  };\n\n  return (\n    <div>\n      <p>{itemCount} items - ${total}</p>\n      <button onClick={handleCheckout}>Checkout</button>\n    </div>\n  );\n}",
+        "language": "javascript",
+        "list": [
+          {
+            "title": "Render Phase",
+            "content": "total and itemCount calculated during render - pure computation"
+          },
+          {
+            "title": "Effect Phase",
+            "content": "Analytics tracking in useEffect - side effect that runs after commit"
+          },
+          {
+            "title": "Event Handler",
+            "content": "Checkout button handled directly - immediate response to user click"
+          }
+        ]
+      }
     ]
   },
 

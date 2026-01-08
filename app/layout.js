@@ -4,8 +4,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Escaping the Type Safety Black Hole",
-  description: "Escaping the Type Safety Black Hole by Jagadeesh",
+  title: "use-effect vs Side-effects: Writing React code that doesn't fight you",
+  description: "use-effect vs Side-effects: Writing React code that doesn't fight you by Jagadeesh",
 };
 
 export default function RootLayout({ children }) {
