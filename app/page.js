@@ -16,29 +16,32 @@ export default function Page() {
       <Intro data={data.intro} />
       <SingleList data={data.agenda} />
 
-      {/* Basic TypeScript Operators */}
-      <HorizandalLarge data={data.basicOperators} />
+      {/* Introduction - About useEffect */}
+      <HorizandalLarge data={data.introAboutUseEffect} />
 
-      {/* Tricky TypeScript Operators (unknown, never, any) */}
-      <HorizandalLarge data={data.trickyOperators} />
+      {/* Introduction - Why This Talk */}
+      <HorizandalLarge data={data.whyThisTalk} />
 
-      {/* When any is Used */}
-      <SingleList data={data.whenAnyIsUsed} />
+      {/* Why useEffect Feels Necessary */}
+      <HorizandalLarge data={data.whyUseEffectFeelsNecessary} />
 
-      {/* Why any Creeps Up */}
-      <SingleList data={data.whyAnyCreepsUp} />
+      {/* React Mental Model - Render → Commit */}
+      <HorizandalLarge data={data.reactMentalModel} />
 
-      {/* Problems with any */}
-      <HorizandalLarge data={data.problemsWithAny} />
+      {/* React Mental Model Examples */}
+      <HorizandalLarge data={data.reactMentalModelExamples} />
 
-      {/* How to Systematically Avoid/Remove any */}
-      <HorizandalLarge data={data.howToAvoidAny} />
+      {/* React 19: New Tools, Same Principles */}
+      <HorizandalLarge data={data.react19Features} />
 
-      {/* Practical Examples */}
-      <SingleList data={data.practicalExamples} />
+      {/* Summing Up */}
+      <SingleList data={data.summingUp} />
+
+      {/* Pop Quiz */}
+      <SingleList data={data.quiz} />
 
       <Thanks data={data.thank} />
-      <TimerComponent timer={30} />
+      <TimerComponent timer={25} />
 
       <AnimatedImage/>
     </main>
