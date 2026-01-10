@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const data = [
-  { key: "S", path: "/images/summer.gif", alt: "summer", width: "1000px" },
-  { key: "C", path: "/images/c.png", alt: "chinrasu", width: "1000px" },
+
+
 
 ];
 

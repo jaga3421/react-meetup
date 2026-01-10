@@ -43,7 +43,7 @@ export default function Page() {
       <Thanks data={data.thank} />
       <TimerComponent timer={25} />
 
-      <AnimatedImage/>
+
     </main>
   );
 }

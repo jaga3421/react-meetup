@@ -41,7 +41,7 @@ export default {
         "list": [
           {
             "title": "useEffect",
-            "content": "The most powerful and most misused hook in React"
+            "content": "The most powerful and most used hook in React"
           },
           {
             "title": "What is it?",
