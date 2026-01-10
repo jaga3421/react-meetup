@@ -5,7 +5,7 @@ const RBLogo = () => {
   return (
     <div className="absolute top-0 left-0 p-3 ">
       <Image
-        src="/images/tc.jpeg"
+        src="/images/reacthyderabad_logo.jpeg"
         alt="jj"
         width={60}
         height={60}
