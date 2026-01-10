@@ -256,6 +256,36 @@ export default {
           }
         ]
       },
+      {
+        "title": "Example 3: User Actions in Handlers",
+        "code": "function SearchBox() {\n  const [query, setQuery] = useState('');\n  const [results, setResults] = useState([]);\n\n  // ✅ User action handled directly in event handler\n  const handleSearch = (value) => {\n    setQuery(value);\n    if (value) {\n      // Direct response to user input - no waiting for render cycle\n      fetchResults(value).then(setResults);\n    } else {\n      setResults([]);\n    }\n  };\n\n  return (\n    <input\n      value={query}\n      onChange={(e) => handleSearch(e.target.value)}\n    />\n  );\n}",
+        "language": "javascript",
+        "list": [
+          {
+            "title": "What's Happening",
+            "content": "Form input handled directly in onChange handler - immediate response to user action"
+          },
+          {
+            "title": "Why This Works",
+            "content": "User actions should trigger handlers immediately, not wait for render + effect cycle"
+          }
+        ]
+      },
+      {
+        "title": "Example 4: Orchestrating Logic Properly",
+        "code": "function UserDashboard({ userId }) {\n  const [user, setUser] = useState(null);\n  const [posts, setPosts] = useState([]);\n\n  // ✅ Single effect with async - clearer flow, no waterfall\n  useEffect(() => {\n    async function loadData() {\n      // Fetch user first\n      const userData = await fetchUser(userId);\n      setUser(userData);\n      \n      // Then fetch posts - sequential but in one effect\n      const postsData = await fetchPosts(userData.id);\n      setPosts(postsData);\n    }\n    loadData();\n  }, [userId]);\n\n  if (!user) return <div>Loading...</div>;\n  return (\n    <div>\n      <h1>{user.name}</h1>\n      <p>{posts.length} posts</p>\n    </div>\n  );\n}",
+        "language": "javascript",
+        "list": [
+          {
+            "title": "What's Happening",
+            "content": "Both fetches happen in one effect using async/await - clear sequential flow"
+          },
+          {
+            "title": "Why This Works",
+            "content": "No waterfall of effects, clear dependency on userId, easier to reason about and maintain"
+          }
+        ]
+      }
     ]
   },
 
