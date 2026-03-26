@@ -1,7 +1,10 @@
 export default {
   "intro": {
-    "title": "use-effect vs Side-effects: Writing React code that doesn't fight you",
-    "author": "Jagadeesh J, Founding Engineer, Functionals.ai",
+    "title": "Voice first React",
+    "subtitle": "Build web application that listens to you",
+    "author": "Jagadeesh",
+    "meetup": "React Bangalore",
+    "company": "Turing",
     "social": [
       {
         "icon": "FaLinkedin",
@@ -24,199 +27,263 @@ export default {
     "id": "agenda",
     "title": "Talk Agenda",
     "subtitles": [
-      "Introduction",
-      "Why useEffect Feels Necessary - Common Misconceptions",
-      "React Mental Model - Render → Commit",
-      "React 19: New Tools, Same Principles",
-      "Pop Quiz"
+      "CLI → GUI → Voice",
+      "Use Cases",
+      "How Voice Works",
+      "Commands vs Conversation",
+      "React Architecture",
+      "Implementation",
+      "Best Practices",
+      "Using AI",
+      "Live Demo",
+      "Q&A"
     ]
   },
 
-  "introAboutUseEffect": {
-    "id": "introAboutUseEffect",
-    "title": "What is useEffect?",
+  "theEvolution": {
+    "id": "theEvolution",
+    "title": "CLI → GUI → Voice",
     "horizandalSubSlides": [
       {
-        "title": "The Hook We All Know",
+        "title": "CLI: The Beginning",
         "list": [
-          {
-            "title": "useEffect",
-            "content": "The most powerful and most used hook in React"
-          },
-          {
-            "title": "What is it?",
-            "content": "A hook that lets you run code after React has updated the DOM"
-          },
-          {
-            "title": "When does it run?",
-            "content": "After every render by default, or when dependencies change"
-          }
+          { "title": "Precision", "content": "Direct control via text commands" },
+          { "title": "Complexity", "content": "High bar for entry, steep learning curve" },
+          { "title": "Efficiency", "content": "Fastest for power users, but invisible to others" }
         ]
       },
       {
-        "title": "Why Does It Exist?",
+        "title": "GUI: The Standard",
         "list": [
-          {
-            "title": "React's Rendering Model",
-            "content": "React components render JSX based on props and state. You can't do things like API calls or DOM updates while the component is rendering"
-          },
-          {
-            "title": "The Need",
-            "content": "Sometimes you need to do something after render: fetch data, update document title, set up subscriptions"
-          },
-          {
-            "title": "The Solution",
-            "content": "useEffect gives you a way to run code after the component has rendered and committed to the DOM"
-          }
+          { "title": "Accessibility", "content": "Visual icons made tech intuitive" },
+          { "title": "Interaction", "content": "Point-and-click became the universal language" },
+          { "title": "Constraint", "content": "Limited by screen size and physical input" }
         ]
       },
       {
-        "title": "Simple Example",
-        "code": "function UserProfile({ userId }) {\n  const [user, setUser] = useState(null);\n\n  useEffect(() => {\n    // Runs after render\n    fetch(`/api/users/${userId}`)\n      .then(res => res.json())\n      .then(setUser);\n  }, [userId]); // Only re-runs if userId changes\n\n  return <div>{user?.name || 'Loading...'}</div>;\n}",
-        "language": "javascript",
+        "title": "Voice: The natural step",
         "list": [
-          {
-            "title": "What's happening?",
-            "content": "After component renders, useEffect fetches user data"
-          },
-          {
-            "title": "Dependency array [userId]",
-            "content": "Effect only re-runs when userId changes, not on every render"
-          }
+          { "title": "Frictionless", "content": "Zero learning curve - we already know how to talk" },
+          { "title": "Ubiquitous", "content": "Computing everywhere - kitchen, cars, living rooms" },
+          { "title": "Dynamic", "content": "From static clicks to intent-driven conversations" }
         ]
       }
     ]
   },
 
-  "whyThisTalk": {
-    "id": "whyThisTalk",
-    "title": "Why Talk About useEffect in 2026?",
+  "realLifeUseCases": {
+    "id": "realLifeUseCases",
+    "title": "Use Cases",
     "horizandalSubSlides": [
       {
-        "title": "The Biryani Paradox",
+        "title": "Accessibility",
         "list": [
-          {
-            "title": "Everyone Knows It, But...",
-            "content": "Just like how every Hyderabadi knows biryani, every React dev knows useEffect. But do we really know it? Or are we just following the recipe without understanding the spices?"
-          },
-          {
-            "title": "The Recipe vs The Technique",
-            "content": "It's been around since Hooks (2018), but we're still writing code that fights React's mental model. Knowing the ingredients isn't the same as knowing when to add them."
-          },
-          {
-            "title": "The 2 AM Debugging Session",
-            "content": "We're building amazing products here in Hyderabad, but how many of us have debugged a useEffect dependency nightmare at 2 AM? This talk is for that developer who's been there."
-          }
+          { "title": "Inclusion", "content": "Empowering users with motor or visual impairments" },
+          { "title": "Alt-Input", "content": "Voice as a primary, not secondary, interaction" }
+        ]
+      },
+      {
+        "title": "Hands-Free Contexts",
+        "list": [
+          { "title": "Safety", "content": "Driving, industrial work, medical procedures" },
+          { "title": "Convenience", "content": "Smart homes, cooking, multi-tasking" }
+        ]
+      },
+      {
+        "title": "Next-Gen Agents",
+        "list": [
+          { "title": "Contextual AI", "content": "Talking to LLMs directly within your app" },
+          { "title": "intent-First", "content": "Replacing complex forms with natural dialogue" }
         ]
       }
     ]
   },
 
-  "whyUseEffectFeelsNecessary": {
-    "id": "whyUseEffectFeelsNecessary",
-    "title": "Why useEffect Feels Necessary",
+  "theGeneralIdea": {
+    "id": "theGeneralIdea",
+    "title": "How Voice Interfaces Work",
     "horizandalSubSlides": [
       {
-        "title": "Misconception 1: Derived State",
-        "code": "function UserCard({ firstName, lastName }) {\n  const [fullName, setFullName] = useState('');\n\n  // Issue: Extra render cycle - component renders, then effect runs,\n  // then setState triggers another render. Unnecessary state sync.\n  useEffect(() => {\n    setFullName(`${firstName} ${lastName}`);\n  }, [firstName, lastName]);\n\n  return <div>{fullName}</div>;\n}",
-        "language": "javascript",
+        "title": "The Interaction Loop",
         "list": [
-          {
-            "title": "Why It Feels Necessary",
-            "content": "We think 'if it changes, it needs useState' - but derived values don't need state"
-          },
-          {
-            "title": "The Problem",
-            "content": "Unnecessary state + useEffect sync when value can be computed directly"
-          }
+          { "title": "Listen", "content": "Capture audio continuously and detect when the user starts or stops speaking" },
+          { "title": "Transcribe", "content": "Convert speech into text using the browser or a cloud speech-to-text API" },
+          { "title": "Understand", "content": "Decide whether the text is a direct command, free-form intent, or just dictation" },
+          { "title": "Act", "content": "Trigger a React state change, API call, navigation, or spoken response" }
         ]
       },
       {
-        "title": "Misconception 2: Event Handling",
-        "code": "function SearchBox() {\n  const [query, setQuery] = useState('');\n  const [results, setResults] = useState([]);\n\n  // Issue: User types → setQuery → render → effect runs → fetch\n  // Extra render cycle, delayed response. User action should trigger\n  // handler directly, not wait for render + effect cycle.\n  useEffect(() => {\n    if (query) {\n      fetchResults(query).then(setResults);\n    }\n  }, [query]);\n\n  return <input onChange={(e) => setQuery(e.target.value)} />;\n}",
-        "language": "javascript",
+        "title": "Three Different Layers",
         "list": [
-          {
-            "title": "Why It Feels Necessary",
-            "content": "We want to fetch on input change, and useEffect 'reacts' to state changes"
-          },
-          {
-            "title": "The Problem",
-            "content": "useEffect runs after render, creating unnecessary re-renders for user actions"
-          }
-        ]
-      },
-      {
-        "title": "Misconception 3: Orchestrating Logic",
-        "code": "function UserDashboard({ userId }) {\n  const [user, setUser] = useState(null);\n  const [posts, setPosts] = useState([]);\n\n  // Issue: Waterfall requests - must wait for user before fetching posts\n  // Multiple renders, unclear dependency chain, harder to reason about\n  useEffect(() => {\n    fetchUser(userId).then(setUser);\n  }, [userId]);\n\n  // Issue: Second effect depends on first, creating sequential flow\n  // If user changes, both effects re-run unnecessarily\n  useEffect(() => {\n    if (user) {\n      fetchPosts(user.id).then(setPosts);\n    }\n  }, [user]);\n\n  return <div>...</div>;\n}",
-        "language": "javascript",
-        "list": [
-          {
-            "title": "Why It Feels Necessary",
-            "content": "We need user before posts, so separate effects seem logical"
-          },
-          {
-            "title": "The Problem",
-            "content": "Multiple effects create waterfall requests and make dependencies unclear"
-          }
-        ]
-      },
-      {
-        "title": "The Common Thread",
-        "list": [
-          {
-            "title": "We Reach for useEffect Because...",
-            "content": "It feels like the 'React way' to handle anything that happens after render"
-          },
-          {
-            "title": "But React Has Better Patterns",
-            "content": "Derived state in render, events in handlers, data fetching with proper patterns"
-          },
-          {
-            "title": "The Result",
-            "content": "Code that works but is harder to reason about, debug, and maintain"
-          }
+          { "title": "Transcript", "content": "Raw words coming from speech recognition. Useful for UI, not safe for direct execution." },
+          { "title": "Intent", "content": "Structured meaning such as `open_settings`, `search_docs`, or `start_recording`." },
+          { "title": "Action", "content": "The actual app behavior. React should execute only validated actions, never arbitrary text." }
         ]
       }
     ]
   },
 
-  "reactMentalModel": {
-    "id": "reactMentalModel",
-    "title": "React Mental Model - Render → Commit",
+  "commandsVsConversation": {
+    "id": "commandsVsConversation",
+    "title": "Commands vs Conversation",
     "horizandalSubSlides": [
       {
-        "title": "Render → Commit → Effects",
+        "title": "Command Mode",
         "list": [
-          {
-            "title": "Render Phase",
-            "content": "React calls your component, gets JSX. Pure computation - no side effects. Calculate derived values here."
-          },
-          {
-            "title": "Commit Phase",
-            "content": "React updates the DOM. Browser paints the screen."
-          },
-          {
-            "title": "Effects Run",
-            "content": "useEffect runs AFTER commit. This is when side effects are safe: API calls, subscriptions, DOM manipulation"
-          }
+          { "title": "Deterministic", "content": "Exact or near-exact phrases like 'next slide', 'open demo', or 'submit form'" },
+          { "title": "Fast", "content": "Low latency and predictable results because you already know the supported actions" },
+          { "title": "Safer", "content": "Best for navigation, toggles, filters, or anything that changes app state directly" }
         ]
       },
       {
-        "title": "The Golden Rule",
+        "title": "Conversation Mode",
         "list": [
-          {
-            "title": "Calculated in render?",
-            "content": "Do it during render. Derived state, filtered lists, computed values"
-          },
-          {
-            "title": "Side effect?",
-            "content": "Put it in useEffect. API calls, subscriptions, timers, DOM updates"
-          },
-          {
-            "title": "User action?",
-            "content": "Handle in event handlers. onClick, onChange - direct responses to user input"
-          }
+          { "title": "Flexible", "content": "Natural language requests like 'show me the customer who signed up yesterday'" },
+          { "title": "Ambiguous", "content": "Needs interpretation, slot extraction, and more careful validation" },
+          { "title": "AI-Friendly", "content": "Best for assistants, search, summarization, and contextual help" }
+        ]
+      },
+      {
+        "title": "The Practical Rule",
+        "list": [
+          { "title": "Commands First", "content": "Use deterministic matching whenever the action is known and bounded" },
+          { "title": "Escalate When Needed", "content": "Use AI only when the user's language is too fuzzy for direct matching" },
+          { "title": "Keep UX Clear", "content": "Users should know whether they are controlling the app or talking to an assistant" }
+        ]
+      }
+    ]
+  },
+
+  "reactArchitecture": {
+    "id": "reactArchitecture",
+    "title": "Voice Architecture in React",
+    "horizandalSubSlides": [
+      {
+        "title": "A Clean State Flow",
+        "list": [
+          { "title": "Speech Input", "content": "Microphone audio enters through Web Speech API or a streaming transcription service" },
+          { "title": "Transcript State", "content": "React stores the current transcript separately from UI state and command state" },
+          { "title": "Intent Parser", "content": "A parser or matcher converts text into a known command or structured intent" },
+          { "title": "Action Dispatcher", "content": "Only the dispatcher changes app state, calls APIs, or navigates routes" }
+        ]
+      },
+      {
+        "title": "Why React Fits Well",
+        "list": [
+          { "title": "State Coordination", "content": "Voice UIs have many moving states: listening, idle, interim text, final text, errors, and permissions" },
+          { "title": "Component Boundaries", "content": "A microphone button, transcript panel, and action result can stay isolated but synchronized" },
+          { "title": "Predictable Updates", "content": "The UI remains a function of state, even when the input is continuous and event-driven" }
+        ]
+      }
+    ]
+  },
+
+  "triggerCommands": {
+    "id": "triggerCommands",
+    "title": "Trigger Commands and Intent Detection",
+    "horizandalSubSlides": [
+      {
+        "title": "Examples",
+        "list": [
+          { "title": "Navigation", "content": "'next slide', 'previous slide', 'open demo'" },
+          { "title": "Controls", "content": "'start listening', 'stop listening', 'pause timer'" },
+          { "title": "Tasks", "content": "'search docs for hooks', 'filter by status', 'create a note'" }
+        ]
+      },
+      {
+        "title": "How to Detect Them",
+        "list": [
+          { "title": "Command Registry", "content": "Store supported phrases and handlers in one place instead of scattering string checks across components" },
+          { "title": "Aliases", "content": "Support natural variations like 'go next', 'next one', or 'show the demo'" },
+          { "title": "Confidence", "content": "Require enough certainty before firing a command that mutates state or triggers an API call" }
+        ]
+      },
+      {
+        "title": "What Not to Do",
+        "list": [
+          { "title": "Don't Execute Raw Text", "content": "A transcript is not a command until it has been matched and validated" },
+          { "title": "Don't Mix Parsing with UI", "content": "Keep intent detection separate from button rendering and side effects" },
+          { "title": "Don't Trust Interim Text", "content": "Use interim text for feedback, but trigger actions from stable final phrases" }
+        ]
+      }
+    ]
+  },
+
+  "exampleImplementation": {
+    "id": "exampleImplementation",
+    "title": "Implementation",
+    "horizandalSubSlides": [
+      {
+        "title": "useVoice Hook",
+        "code": "function useVoice() {\n  const [transcript, setTranscript] = useState('');\n  \n  const startListening = () => {\n    const recognition = new window.SpeechRecognition();\n    recognition.onresult = (event) => {\n      setTranscript(event.results[0][0].transcript);\n    };\n    recognition.start();\n  };\n\n  return { transcript, startListening };\n}",
+        "language": "javascript",
+        "list": [
+          { "title": "Setup", "content": "Initialize native SpeechRecognition" },
+          { "title": "React state", "content": "Update local state on voice results" }
+        ]
+      },
+      {
+        "title": "Command Registry",
+        "code": "const commands = [\n  {\n    phrases: ['next slide', 'go next'],\n    action: () => goNext(),\n  },\n  {\n    phrases: ['open demo', 'show demo'],\n    action: () => router.push('/demo-dictation'),\n  },\n  {\n    phrases: ['start listening'],\n    action: () => startListening(),\n  },\n];\n\nfunction handleTranscript(transcript) {\n  const normalized = transcript.toLowerCase().trim();\n  const match = commands.find((command) =>\n    command.phrases.some((phrase) => normalized.includes(phrase))\n  );\n\n  if (match) {\n    match.action();\n  }\n}",
+        "language": "javascript",
+        "list": [
+          { "title": "Single Source of Truth", "content": "All supported commands and handlers live in one place" },
+          { "title": "Predictable Actions", "content": "React only executes known actions, not arbitrary spoken text" }
+        ]
+      },
+      {
+        "title": "Intent Pipeline",
+        "code": "function handleVoiceInput(transcript) {\n  const command = matchCommand(transcript);\n\n  if (command) {\n    dispatch(command);\n    return;\n  }\n\n  const intent = await inferIntentWithAI(transcript);\n  if (isAllowedIntent(intent)) {\n    dispatch(intent);\n  }\n}",
+        "language": "javascript",
+        "list": [
+          { "title": "Deterministic First", "content": "Try direct command matching before calling any model" },
+          { "title": "Guarded AI", "content": "Validate AI output against an allowed action schema before execution" }
+        ]
+      }
+    ]
+  },
+
+  "bestPractices": {
+    "id": "bestPractices",
+    "title": "Best Practices",
+    "subtitles": [
+      "Always show microphone state and permission state",
+      "Keep keyboard/mouse fallback for every critical flow",
+      "Separate transcript, intent, and action",
+      "Confirm destructive actions before executing them",
+      "Use final phrases for commands, not unstable interim text",
+      "Measure latency, failures, and no-match commands",
+      "Design for noise, accents, and bad network conditions",
+      "Be explicit about what stays local vs what goes to cloud"
+    ]
+  },
+
+  "usingAI": {
+    "id": "usingAI",
+    "title": "Using AI",
+    "horizandalSubSlides": [
+      {
+        "title": "Where AI Helps",
+        "list": [
+          { "title": "Intent Extraction", "content": "Turn fuzzy natural language into a structured intent and parameters" },
+          { "title": "Contextual Help", "content": "Answer user questions inside the app without forcing rigid commands" },
+          { "title": "Formatting", "content": "Clean up dictation, summarize notes, or extract tasks from speech" }
+        ]
+      },
+      {
+        "title": "Where AI Should Not Lead",
+        "list": [
+          { "title": "Critical Controls", "content": "Don't let a model directly trigger payments, deletes, or irreversible mutations" },
+          { "title": "Permission Boundaries", "content": "The model can suggest an intent, but the app must own execution" },
+          { "title": "Basic Commands", "content": "Simple known commands should stay deterministic for speed and reliability" }
+        ]
+      },
+      {
+        "title": "The Hybrid Model",
+        "list": [
+          { "title": "Step 1", "content": "Try exact command matching against a registry of supported actions" },
+          { "title": "Step 2", "content": "If nothing matches, send the transcript to AI for structured intent parsing" },
+          { "title": "Step 3", "content": "Validate the AI result against an allow-list before dispatching the action" }
         ]
       }
     ]
@@ -289,38 +356,15 @@ export default {
     ]
   },
 
-  "react19Features": {
-    "id": "react19Features",
-    "title": "React 19: New Tools, Same Principles",
+  "fullDemo": {
+    "id": "fullDemo",
+    "title": "Demo",
     "horizandalSubSlides": [
       {
-        "title": "The `use` Hook",
-        "code": "// Before: useEffect for async data\nfunction UserProfile({ userId }) {\n  const [user, setUser] = useState(null);\n  \n  useEffect(() => {\n    fetchUser(userId).then(setUser);\n  }, [userId]);\n  \n  if (!user) return <div>Loading...</div>;\n  return <div>{user.name}</div>;\n}\n\n// React 19: use hook for Promises\nfunction UserProfile({ userId }) {\n  const user = use(fetchUser(userId));\n  // Suspense handles loading automatically\n  return <div>{user.name}</div>;\n}",
-        "language": "javascript",
+        "title": "The Conversational App",
         "list": [
-          {
-            "title": "What It Does",
-            "content": "Reads Promises directly in render, works with Suspense for loading states"
-          },
-          {
-            "title": "Impact on useEffect",
-            "content": "Can replace useEffect for data fetching - cleaner, works with Suspense boundaries"
-          }
-        ]
-      },
-      {
-        "title": "Actions",
-        "code": "// Before: useEffect for form submission\nfunction LoginForm() {\n  const [status, setStatus] = useState('idle');\n  \n  const handleSubmit = async (e) => {\n    e.preventDefault();\n    setStatus('pending');\n    try {\n      await login(email, password);\n      setStatus('success');\n    } catch (error) {\n      setStatus('error');\n    }\n  };\n  \n  return <form onSubmit={handleSubmit}>...</form>;\n}\n\n// React 19: Actions simplify this\nfunction LoginForm() {\n  async function handleSubmit(formData) {\n    'use server';\n    await login(formData.get('email'), formData.get('password'));\n  }\n  \n  return <form action={handleSubmit}>...</form>;\n}",
-        "language": "javascript",
-        "list": [
-          {
-            "title": "What It Does",
-            "content": "Simplifies async form handling with automatic pending/error states"
-          },
-          {
-            "title": "Impact on useEffect",
-            "content": "Replaces useEffect patterns for form state management - cleaner, less boilerplate"
-          }
+          { "title": "Dictation Demo", "content": "Real-time Voice-to-Text comparison", "link": "/demo-dictation" },
+          { "title": "AI Agent Copilot", "content": "Coming soon..." }
         ]
       }
     ]
@@ -684,17 +728,18 @@ export default {
     "id": "summingUp",
     "title": "Summing Up",
     "subtitles": [
-      "If it can be calculated in render, do it there",
-      "Side effects belong in useEffect",
-      "User actions go in event handlers",
-      "React 19 gives us better tools, but principles remain",
-      "Predictable components are happy components"
+      "Voice is the most natural interface",
+      "React is a great coordinator for transcript, intent, and action state",
+      "Deterministic commands should come before AI interpretation",
+      "AI is best for ambiguity, extraction, and assistance",
+      "The app must always own execution and safety",
+      "Let's build apps that listen"
     ]
   },
 
-  "quiz": {
-    "id": "quiz",
-    "title": "Pop Quiz",
+  "qa": {
+    "id": "qa",
+    "title": "Q&A",
     "subtitles": []
   },
 

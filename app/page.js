@@ -16,29 +16,41 @@ export default function Page() {
       <Intro data={data.intro} />
       <SingleList data={data.agenda} />
 
-      {/* Introduction - About useEffect */}
-      <HorizandalLarge data={data.introAboutUseEffect} />
+      {/* The Evolution */}
+      <HorizandalLarge data={data.theEvolution} />
 
-      {/* Introduction - Why This Talk */}
-      <HorizandalLarge data={data.whyThisTalk} />
+      {/* Real-world Use Cases */}
+      <HorizandalLarge data={data.realLifeUseCases} />
 
-      {/* Why useEffect Feels Necessary */}
-      <HorizandalLarge data={data.whyUseEffectFeelsNecessary} />
+      {/* How Voice Interfaces Work */}
+      <HorizandalLarge data={data.theGeneralIdea} />
 
-      {/* React Mental Model - Render → Commit */}
-      <HorizandalLarge data={data.reactMentalModel} />
+      {/* Commands vs Conversation */}
+      <HorizandalLarge data={data.commandsVsConversation} />
 
-      {/* React Mental Model Examples */}
-      <HorizandalLarge data={data.reactMentalModelExamples} />
+      {/* Voice Architecture in React */}
+      <HorizandalLarge data={data.reactArchitecture} />
 
-      {/* React 19: New Tools, Same Principles */}
-      <HorizandalLarge data={data.react19Features} />
+      {/* Trigger Commands */}
+      <HorizandalLarge data={data.triggerCommands} />
+
+      {/* Example Implementation */}
+      <HorizandalLarge data={data.exampleImplementation} />
+
+      {/* Best Practices */}
+      <SingleList data={data.bestPractices} />
+
+      {/* Using AI */}
+      <HorizandalLarge data={data.usingAI} />
+
+      {/* Full Demo */}
+      <HorizandalLarge data={data.fullDemo} />
 
       {/* Summing Up */}
       <SingleList data={data.summingUp} />
 
-      {/* Pop Quiz */}
-      <SingleList data={data.quiz} />
+      {/* QA */}
+      <SingleList data={data.qa} />
 
       <Thanks data={data.thank} />
       <TimerComponent timer={25} />
