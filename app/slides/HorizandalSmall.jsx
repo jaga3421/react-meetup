@@ -15,6 +15,9 @@ function HorizandalSmall({ data }) {
     triggerOnce: false,
     threshold: 0.1,
   });
+  const itemCount = data.horizandalSubSlides.length;
+  const cardWidthClass =
+    itemCount === 3 ? "w-1/3" : itemCount === 2 ? "w-1/2" : "w-1/4";
 
   return (
     <div ref={ref}>
@@ -34,7 +37,7 @@ function HorizandalSmall({ data }) {
             <motion.div
               variants={VariantStaggerChildShow}
               key={index}
-              className="cardPrimary w-1/4"
+              className={`cardPrimary ${cardWidthClass}`}
             >
               <h3 className="text-3xl font-semibold mb-8">{slide.title}</h3>
               {slide.image && (

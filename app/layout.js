@@ -4,8 +4,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "use-effect vs Side-effects: Writing React code that doesn't fight you",
-  description: "use-effect vs Side-effects: Writing React code that doesn't fight you by Jagadeesh",
+  title: "Voice first React: Build web application that listens to you",
+  description: "Voice first React: Build web application that listens to you by Jagadeesh",
 };
 
 export default function RootLayout({ children }) {

@@ -27,24 +27,24 @@ function Intro({ data }) {
     <div ref={ref}>
       <SlideWrapper className="text-center" id="intro">
         <div className="mb-16 w-full">
-          <MotionH1 inView={inView} className="mb-4">USE-EFFECT VS SIDE-EFFECTS</MotionH1>
+          <MotionH1 inView={inView} className="mb-4 uppercase">{data.title}</MotionH1>
           <motion.h2
             className="text-3xl font-thin text-pink-600"
             variants={HxVariants}
             initial="hidden"
             animate={inView ? "show" : "hidden"}
           >
-            writing react code that doesn't fight you
+            {data.subtitle}
           </motion.h2>
         </div>
         <h3 className="text-2xl mb-8 tracking-widest font-thin uppercase">
           <TypeAnimation
             sequence={[
-              "Jagadeesh",
+              data.author,
               2000,
-              "React Hyderabad",
+              data.meetup,
               2000,
-              "Functionals.ai",
+              data.company,
               2000,
             ]}
             wrapper="span"

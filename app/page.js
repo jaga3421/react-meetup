@@ -2,46 +2,80 @@ import data from './data';
 import Intro from './slides/Intro';
 import SingleList from './slides/SingleList';
 import HorizandalLarge from './slides/HorizandalLarge';
+import HorizandalSmall from './slides/HorizandalSmall';
+import LinkSlide from './slides/Link';
 import Thanks from './slides/Thanks';
+import SlideDotsNav from './components/SlideDotsNav';
 import TimerComponent from './components/TimerComponent';
 import RBLogo from './components/RBLogo';
-import AnimatedImage from './components/AnimatedImage';
+import VoiceCelebration from './components/voice-interface/VoiceCelebration';
+import VoiceInterface from './components/voice-interface/VoiceInterface';
+import VoiceSubtitleBar from './components/voice-interface/VoiceSubtitleBar';
 
 export default function Page() {
+  const slideNavItems = [
+    { label: 'Intro' },
+    { label: 'Agenda' },
+    { label: 'CLI -> GUI -> Voice' },
+    { label: 'Use Cases' },
+    { label: 'How Voice Interfaces Work' },
+    { label: 'Voice Architecture in React' },
+    { label: 'Implementation' },
+    { label: 'Demo' },
+    { label: 'Phrase vs Intent' },
+    { label: 'Best Practices' },
+    { label: 'Summing Up' },
+    { label: 'Q&A' },
+    { label: 'Thanks' },
+  ];
+
   return (
-    <main className="dvh z-0 h-screen snap-y snap-mandatory overflow-x-hidden overflow-y-scroll bg-[rgb(36,36,36)] text-gray-300">
+    <main
+      id="deck-root"
+      className="dvh z-0 h-screen snap-y snap-mandatory overflow-x-hidden overflow-y-scroll bg-[rgb(36,36,36)] text-gray-300"
+    >
       <RBLogo />
+      <SlideDotsNav items={slideNavItems} />
       
       {/* Intro */}
       <Intro data={data.intro} />
       <SingleList data={data.agenda} />
 
-      {/* Introduction - About useEffect */}
-      <HorizandalLarge data={data.introAboutUseEffect} />
+      {/* The Evolution */}
+      <HorizandalSmall data={data.theEvolution} />
 
-      {/* Introduction - Why This Talk */}
-      <HorizandalLarge data={data.whyThisTalk} />
+      {/* Real-world Use Cases */}
+      <HorizandalLarge data={data.realLifeUseCases} />
 
-      {/* Why useEffect Feels Necessary */}
-      <HorizandalLarge data={data.whyUseEffectFeelsNecessary} />
+      {/* How Voice Interfaces Work */}
+      <HorizandalLarge data={data.theGeneralIdea} />
 
-      {/* React Mental Model - Render → Commit */}
-      <HorizandalLarge data={data.reactMentalModel} />
+      {/* Voice Architecture in React */}
+      <HorizandalLarge data={data.reactArchitecture} />
 
-      {/* React Mental Model Examples */}
-      <HorizandalLarge data={data.reactMentalModelExamples} />
+      {/* Example Implementation */}
+      <HorizandalLarge data={data.exampleImplementation} />
 
-      {/* React 19: New Tools, Same Principles */}
-      <HorizandalLarge data={data.react19Features} />
+      {/* Full Demo */}
+      <LinkSlide data={data.fullDemo} />
+
+      {/* Phrase vs Intent */}
+      <HorizandalLarge data={data.phraseVsIntent} />
+
+      {/* Best Practices */}
+      <SingleList data={data.bestPractices} />
 
       {/* Summing Up */}
       <SingleList data={data.summingUp} />
 
-      {/* Pop Quiz */}
-      <SingleList data={data.quiz} />
+      {/* QA */}
+      <SingleList data={data.qa} />
 
       <Thanks data={data.thank} />
       <TimerComponent timer={25} />
+      <VoiceSubtitleBar />
+      <VoiceCelebration />
+      <VoiceInterface />
 
 
     </main>

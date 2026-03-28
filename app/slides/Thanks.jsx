@@ -44,7 +44,12 @@ function Thanks({ data }) {
           animate={inView ? "show" : "hidden"}
 
         >
-          <Image src="/images/jaga3421.png" width={560} height={560} />
+          <Image
+            src="/images/jaga3421.png"
+            alt="QR code for Jagadeesh's contact links"
+            width={560}
+            height={560}
+          />
         </motion.div>
         {/* Social Links */}
         <motion.div
