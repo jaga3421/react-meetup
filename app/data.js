@@ -29,13 +29,11 @@ export default {
     "subtitles": [
       "CLI → GUI → Voice",
       "Use Cases",
-      "How Voice Works",
-      "Commands vs Conversation",
       "React Architecture",
       "Implementation",
+      "Demo",
+      "Phrase vs Intent",
       "Best Practices",
-      "Using AI",
-      "Live Demo",
       "Q&A"
     ]
   },
@@ -45,28 +43,19 @@ export default {
     "title": "CLI → GUI → Voice",
     "horizandalSubSlides": [
       {
-        "title": "CLI: The Beginning",
-        "list": [
-          { "title": "Precision", "content": "Direct control via text commands" },
-          { "title": "Complexity", "content": "High bar for entry, steep learning curve" },
-          { "title": "Efficiency", "content": "Fastest for power users, but invisible to others" }
-        ]
+        "title": "CLI",
+        "content": "Command driven",
+        "example": "precise,scriptable,expert"
       },
       {
-        "title": "GUI: The Standard",
-        "list": [
-          { "title": "Accessibility", "content": "Visual icons made tech intuitive" },
-          { "title": "Interaction", "content": "Point-and-click became the universal language" },
-          { "title": "Constraint", "content": "Limited by screen size and physical input" }
-        ]
+        "title": "GUI",
+        "content": "Direct manipulation",
+        "example": "clickable,intuitive,spatial"
       },
       {
-        "title": "Voice: The natural step",
-        "list": [
-          { "title": "Frictionless", "content": "Zero learning curve - we already know how to talk" },
-          { "title": "Ubiquitous", "content": "Computing everywhere - kitchen, cars, living rooms" },
-          { "title": "Dynamic", "content": "From static clicks to intent-driven conversations" }
-        ]
+        "title": "Voice",
+        "content": "Natural interaction",
+        "example": "natural,hands-free,ambient"
       }
     ]
   },
@@ -110,14 +99,6 @@ export default {
           { "title": "Transcribe", "content": "Convert speech into text using the browser or a cloud speech-to-text API" },
           { "title": "Understand", "content": "Decide whether the text is a direct command, free-form intent, or just dictation" },
           { "title": "Act", "content": "Trigger a React state change, API call, navigation, or spoken response" }
-        ]
-      },
-      {
-        "title": "Three Different Layers",
-        "list": [
-          { "title": "Transcript", "content": "Raw words coming from speech recognition. Useful for UI, not safe for direct execution." },
-          { "title": "Intent", "content": "Structured meaning such as `open_settings`, `search_docs`, or `start_recording`." },
-          { "title": "Action", "content": "The actual app behavior. React should execute only validated actions, never arbitrary text." }
         ]
       }
     ]
@@ -214,30 +195,30 @@ export default {
     "title": "Implementation",
     "horizandalSubSlides": [
       {
-        "title": "useVoice Hook",
-        "code": "function useVoice() {\n  const [transcript, setTranscript] = useState('');\n  \n  const startListening = () => {\n    const recognition = new window.SpeechRecognition();\n    recognition.onresult = (event) => {\n      setTranscript(event.results[0][0].transcript);\n    };\n    recognition.start();\n  };\n\n  return { transcript, startListening };\n}",
+        "title": "What You Build",
+        "code": "function VoiceController() {\n  const [transcript, setTranscript] = useState(\"\");\n  const [isListening, setIsListening] = useState(false);\n\n  // 1. Listen continuously\n  // 2. Wait for pause\n  // 3. Match command\n  // 4. Dispatch safe action\n}",
         "language": "javascript",
         "list": [
-          { "title": "Setup", "content": "Initialize native SpeechRecognition" },
-          { "title": "React state", "content": "Update local state on voice results" }
+          { "title": "One loop", "content": "A single controller listens, waits for a pause, understands the phrase, and decides what happens next." },
+          { "title": "Predictable states", "content": "You will manage listening, transcript, command match, execution, and optional AI mode as separate states." }
         ]
       },
       {
-        "title": "Command Registry",
-        "code": "const commands = [\n  {\n    phrases: ['next slide', 'go next'],\n    action: () => goNext(),\n  },\n  {\n    phrases: ['open demo', 'show demo'],\n    action: () => router.push('/demo-dictation'),\n  },\n  {\n    phrases: ['start listening'],\n    action: () => startListening(),\n  },\n];\n\nfunction handleTranscript(transcript) {\n  const normalized = transcript.toLowerCase().trim();\n  const match = commands.find((command) =>\n    command.phrases.some((phrase) => normalized.includes(phrase))\n  );\n\n  if (match) {\n    match.action();\n  }\n}",
+        "title": "What You Need",
+        "code": "const commands = [\n  { phrases: [\"next slide\", \"next\"], action: goNext },\n  { phrases: [\"previous slide\"], action: goPrevious },\n  { phrases: [\"pause timer\"], action: pauseTimer },\n];",
         "language": "javascript",
         "list": [
-          { "title": "Single Source of Truth", "content": "All supported commands and handlers live in one place" },
-          { "title": "Predictable Actions", "content": "React only executes known actions, not arbitrary spoken text" }
+          { "title": "Command registry", "content": "Keep supported phrases and handlers in one place so the system stays debuggable." },
+          { "title": "Fallback path", "content": "Exact phrase matching can run first; AI can come later only for ambiguous cases." }
         ]
       },
       {
-        "title": "Intent Pipeline",
-        "code": "function handleVoiceInput(transcript) {\n  const command = matchCommand(transcript);\n\n  if (command) {\n    dispatch(command);\n    return;\n  }\n\n  const intent = await inferIntentWithAI(transcript);\n  if (isAllowedIntent(intent)) {\n    dispatch(intent);\n  }\n}",
+        "title": "What Users See",
+        "code": "<VoiceInterface />\n<VoiceSubtitleBar />\n<TimerComponent timer={25} />",
         "language": "javascript",
         "list": [
-          { "title": "Deterministic First", "content": "Try direct command matching before calling any model" },
-          { "title": "Guarded AI", "content": "Validate AI output against an allowed action schema before execution" }
+          { "title": "Immediate feedback", "content": "Show whether the mic is active, what was heard, and what command was triggered." },
+          { "title": "Safe actions", "content": "Only validated commands should navigate, start timers, or mutate state." }
         ]
       }
     ]
@@ -358,13 +339,51 @@ export default {
 
   "fullDemo": {
     "id": "fullDemo",
-    "title": "Demo",
+    "heading": "Demo",
+    "links": [
+      {
+        "displayText": "Open voice demo",
+        "link": "/demo-dictation"
+      }
+    ]
+  },
+
+  "phraseVsIntent": {
+    "id": "phraseVsIntent",
+    "title": "Phrase vs Intent",
     "horizandalSubSlides": [
       {
-        "title": "The Conversational App",
+        "title": "Why Phrase Match Can Be Dangerous",
         "list": [
-          { "title": "Dictation Demo", "content": "Real-time Voice-to-Text comparison", "link": "/demo-dictation" },
-          { "title": "AI Agent Copilot", "content": "Coming soon..." }
+          {
+            "title": "Speech is messy",
+            "content": "Accents, pauses, filler words, and recognition errors can turn a safe phrase into the wrong command."
+          },
+          {
+            "title": "Raw text is ambiguous",
+            "content": "A phrase like 'can you go to the next one after agenda' is not the same as the exact command 'next slide'."
+          },
+          {
+            "title": "Execution risk",
+            "content": "If you directly map partial or unstable transcript text to actions, the UI can navigate, mutate state, or trigger side effects too early."
+          }
+        ]
+      },
+      {
+        "title": "Use AI To Extract Intent",
+        "list": [
+          {
+            "title": "Model the meaning",
+            "content": "Instead of trusting the literal phrase, ask AI to classify the transcript into one allowed intent such as `next_slide` or `pause_timer`."
+          },
+          {
+            "title": "Validate before acting",
+            "content": "The model should return only a known command id and reason. Your app still decides whether that intent is allowed."
+          },
+          {
+            "title": "Hybrid works best",
+            "content": "Try exact matching first for speed, then fall back to AI only when the phrase is fuzzy, longer, or conversational."
+          }
         ]
       }
     ]

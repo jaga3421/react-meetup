@@ -42,12 +42,56 @@ async function formatTranscriptFragment(existingTranscript, newFragment) {
   return completion.choices[0]?.message?.content?.trim() || fragment;
 }
 
+async function inferCommandIntent(transcript, commandCatalog) {
+  if (!transcript || commandCatalog.length === 0) {
+    return null;
+  }
+
+  const completion = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    temperature: 0,
+    response_format: { type: "json_object" },
+    messages: [
+      {
+        role: "system",
+        content:
+          "You classify a spoken transcript into one command from the provided catalog, or no match. Return strict JSON with keys matchedCommandId and reason. If nothing fits, matchedCommandId must be null.",
+      },
+      {
+        role: "user",
+        content: JSON.stringify({
+          transcript,
+          commands: commandCatalog,
+        }),
+      },
+    ],
+  });
+
+  const content = completion.choices[0]?.message?.content;
+
+  if (!content) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(content);
+    return {
+      matchedCommandId: parsed.matchedCommandId ?? null,
+      reason: parsed.reason ?? "",
+    };
+  } catch {
+    return null;
+  }
+}
+
 export async function POST(req) {
   try {
     const formData = await req.formData();
     const file = formData.get("file");
     const context = formData.get("context");
     const existingTranscript = formData.get("transcript");
+    const aiMode = formData.get("aiMode");
+    const commands = formData.get("commands");
 
     if (!file) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
@@ -70,8 +114,21 @@ export async function POST(req) {
     const formattedFragment = rawText
       ? await formatTranscriptFragment(transcriptSoFar, rawText)
       : "";
+    const commandCatalog =
+      typeof commands === "string" && commands.trim()
+        ? JSON.parse(commands)
+        : [];
+    const shouldInferIntent = aiMode === "true";
+    const intentMatch = shouldInferIntent
+      ? await inferCommandIntent(rawText, commandCatalog)
+      : null;
 
-    return NextResponse.json({ text: formattedFragment, rawText });
+    return NextResponse.json({
+      text: formattedFragment,
+      rawText,
+      matchedCommandId: intentMatch?.matchedCommandId ?? null,
+      matchReason: intentMatch?.reason ?? "",
+    });
   } catch (error) {
     console.error("Transcription error:", error);
 
